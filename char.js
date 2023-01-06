@@ -770,9 +770,10 @@ function char(charSheet) {
     suffix[getRandomInt(0, suffix.length)] +
     title[getRandomInt(0, title.length)];
   charSheet.weapon = weapon[getRandomInt(0, weapon.length)];
-  charSheet.VIT = getRandomInt(1, 15);
-  charSheet.STR = getRandomInt(1, 15);
-  charSheet.DEX = getRandomInt(1, 15);
+  charSheet.VIT = getRandomInt(5, 20);
+  charSheet.STR = getRandomInt(1, 10);
+  charSheet.DEX = getRandomInt(1, 10);
+  charSheet.HP = charSheet.VIT * 10;
   charSheet.prestige = getRandomInt(0, 101);
   charSheet.birthplace =
     place[getRandomInt(0, place.length)] +
@@ -809,6 +810,7 @@ function makeArmy() {
       fullName: "",
       childOf: [],
       weapon: "",
+      HP: 0,
       VIT: 0,
       STR: 0,
       DEX: 0,
@@ -866,6 +868,7 @@ function makeArmy() {
       fullName: "",
       childOf: [],
       weapon: "",
+      HP: 0,
       VIT: 0,
       STR: 0,
       DEX: 0,
@@ -914,43 +917,96 @@ function showArmy() {
 function combat(soldierA, soldierB) {
   let text;
   let result;
-  let vitA = soldierA.VIT;
-  let vitB = soldierB.VIT;
+  let hpA = soldierA.HP;
+  let hpB = soldierB.HP;
   let strA = soldierA.STR;
   let strB = soldierB.STR;
+  let speedA = soldierA.DEX;
+  let speedB = soldierB.DEX;
+  let first;
+  let second;
   
   text =
   `<span class='name'> ${soldierA.fullName} </span> 
-  wielding a <span class='weapon'> ${soldierA.weapon} </span> 
+  wielding a <span class='highlight'> ${soldierA.weapon} </span> 
   fought <span class='name'> ${soldierB.fullName} </span>
-  wielding a <span class='weapon'> ${soldierB.weapon} </span> and: <hr>`;
+  wielding a <span class='highlight'>${soldierB.weapon}</span>: <hr>`;
 
   result = `<span class='result'>`;
+  result += 
+  `<p><span class='nameA'>${soldierA.name}</span> has <span class='highlight'>${soldierA.HP}HP</span> -
+  <span class='nameB'>${soldierB.name}</span> has <span class='highlight'>${soldierB.HP}HP</span>.</p>`
+
+  //---------------------//
+  //conditions for combat//
+  //---------------------//
+
+  if(speedA > speedB) {
+    first = soldierA;
+    second = soldierB;
+  }else {
+    first = soldierB;
+    second = soldierA;
+  }
+
+  while(first.status && second.status) {
+
+    let dmgFirst = Math.floor(first.STR * first.VIT + (first.HP/10));
+    let dmgSecond = Math.floor(second.STR * second.VIT + (second.HP/10));
+
+    second.HP = second.HP - dmgFirst;
+    result+= 
+    `<p><span class='nameA'>${first.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgFirst}DMG</span>!</p>
+    <p><span class='nameB'>${second.name}</span> has <span class='highlight'>${Math.floor(second.HP)}HP</span> left.</p>`;
+
+    first.HP = first.HP - dmgSecond;
+    result+= 
+    `<p><span class='nameA'>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgSecond}DMG</span>!</p>
+    <p><span class='nameB'>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left.</p>`;
+
+    if(first.HP <= 0) {
+      result += `<span class='name'> ${second.prefix} ${second.name} </span> killed 
+      <span class='name'> ${first.prefix} ${first.name}. </span>`;
+      first.status = false;
+    } else if (second.HP <= 0) {
+      result += `<span class='name'> ${first.prefix} ${first.name} </span> killed 
+      <span class='name'> ${second.prefix} ${second.name}. </span>`;
+      second.status = false;
+    }
+
+  }
 
 
 
-  //conditions for combat
-  if (strA > strB) {
-    result += `<span class='name'> ${soldierA.prefix} ${soldierA.name} </span> killed 
-    <span class='name'> ${soldierB.prefix} ${soldierB.name}. </span>`;
-    soldierB.status = false;
+
+
+
+  // if (strA > strB) {
+  //   result += `<span class='name'> ${soldierA.prefix} ${soldierA.name} </span> killed 
+  //   <span class='name'> ${soldierB.prefix} ${soldierB.name}. </span>`;
+  //   soldierB.status = false;
     
-  }
-  if (strB > strA) {
-    result += `<span class='name'> ${soldierB.prefix} ${soldierB.name} </span> killed 
-    <span class='name'> ${soldierA.prefix} ${soldierA.name}. </span>`;
-    soldierA.status = false;
+  // }
+  // if (strB > strA) {
+  //   result += `<span class='name'> ${soldierB.prefix} ${soldierB.name} </span> killed 
+  //   <span class='name'> ${soldierA.prefix} ${soldierA.name}. </span>`;
+  //   soldierA.status = false;
     
-  }
-  if (strB == strA) {
-    result += 'The battle was indecisive. Both were equally matched.'
-  }
+  // }
+  // if (strB == strA) {
+  //   result += 'The battle was indecisive. Both were equally matched.'
+  // }
+
   result += `</span><hr><p>`
   text += result;
   combatText.push(text);
 }
 
 const combatText = [];
+
+function diceRoll() {
+  return getRandomInt(0, 6);
+}
 
 function makeCombat() {
   
