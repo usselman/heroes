@@ -1,0 +1,107 @@
+
+body {
+    background-color: rgb(220, 220, 220);
+    font-family:'Courier New', Courier, monospace; 
+    
+}
+
+h1 {
+    margin: 2em;
+}
+
+#event {
+    text-align: center;
+    padding: 2em;
+    margin: 0em 2em 0em 2em;
+    font-size: medium;
+}
+
+#army {
+    text-align: center;
+    padding: 0.5em;
+    margin: 0em 2em 0em 2em;
+    width: 45%;
+}
+
+#combat {
+    text-align: center;
+    padding: 2em;
+    margin: 0em 2em 0em 2em;
+    width: 80%;
+    font-size: medium;
+}
+
+.weapon {
+    color: green;
+    font-weight: bold;
+    
+}
+
+.weapon:hover {
+    background-color: rgb(250, 250, 200);
+}
+
+.name {
+    color: blue;
+    font-weight: bold;
+    
+}
+
+.name:hover {
+    background-color: rgb(250, 250, 200);
+}
+
+.result {
+    font-style: italic;
+}
+
+.col {
+    float: left;
+    width: 50%;
+}
+  
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+h2 {
+    text-decoration: underline;
+}
+
+h4 {
+    text-align: center;
+
+}
+
+table, tr, td {
+    border: 1px solid;
+    font-size: small;
+    /*
+    margin-left: auto;
+    margin-right: auto;
+    */
+    text-align: center;
+    padding: 1em;
+    width: 45%;
+}
+
+ul {
+    text-align: justify;
+    list-style-type: square;
+}
+
+ol {
+    text-align: justify;
+    list-style-type: upper-roman;
+}
+
+tr:hover {
+    background-color: rgb(250, 250, 200);
+}
+
+
+
+

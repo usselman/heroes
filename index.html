@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel = "stylesheet" type = "text/css" href = "styles.css">
+    <script language="javascript" type="text/javascript" src="char.js"></script>
+    <script language="javascript" type="module" src="game.js"></script>
+  </head>
+
+  <body style="text-align: center">
+    <h1>Generate!</h1>
+    <form style="font-size: 50px">
+      <input type="button" value="Generate Army" onclick="makeArmy()" />
+      <!--
+      <input type="button" value="Generate Event" onclick="printEvent()" />
+      -->
+      <input type="button" value="Generate Combat" onclick="makeCombat()" />
+    </form>
+      <div class="row">
+        <div class="col">
+          <h2>Army: </h2>
+          <div id="army">
+            
+          </div>
+        </div>
+        <div class="col">
+          <h2>Combat log: </h2>
+          <div id="combat">
+
+          </div>
+
+        </div>
+        <!--
+        <div class="col">
+          <h2>Here is a history: </h2>
+          <div id="event">
+
+          </div>
+        </div>
+        -->
+    </div>
+
+  </body>
+</html>
