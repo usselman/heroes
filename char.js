@@ -1,6 +1,6 @@
 let length;
 let thing;
-const armySize = 100;
+const armySize = 25;
 
 const letters = [
   "b",
@@ -785,15 +785,15 @@ const armyB = [];
 
 function makeArmy() {
   const element = document.getElementById('army');
-  let html = '<h4>Army A</h4><table>' + 
-  '<th>Name:</th>' + 
-  '<th>Child Of:</th>' +
-  '<th>Weapon:</th>' +
-  '<th>VIT:</th>' +
-  '<th>STR:</th>' +
-  '<th>DEX:</th>' +
-  '<th>Prestige:</th>' +
-  '<th>Birthplace:</th>'
+  let html = `<h4>Army A</h4><table>  
+  <th>Name:</th> 
+  <th>Child Of:</th>
+  <th>Weapon:</th>
+  <th>VIT:</th>
+  <th>STR:</th>
+  <th>DEX:</th>
+  <th>Prestige:</th>
+  <th>Birthplace:</th>`
 
   //clear array
   armyA.splice(0, armyA.length);
@@ -838,19 +838,19 @@ function makeArmy() {
   }
 
   //display army in html doc
-  html += '</table>';
+  html += '</table><hr>';
   //end ArmyA
 
   //ArmyB
-  html += '<h4>Army B</h4><table>' + 
-  '<th>Name:</th>' + 
-  '<th>Child Of:</th>' +
-  '<th>Weapon:</th>' +
-  '<th>VIT:</th>' +
-  '<th>STR:</th>' +
-  '<th>DEX:</th>' +
-  '<th>Prestige:</th>' +
-  '<th>Birthplace:</th>'
+  html += `<h4>Army B</h4><table>  
+  <th>Name:</th> 
+  <th>Child Of:</th>
+  <th>Weapon:</th>
+  <th>VIT:</th>
+  <th>STR:</th>
+  <th>DEX:</th>
+  <th>Prestige:</th>
+  <th>Birthplace:</th>`
 
   //clear array
   armyB.splice(0, armyB.length);
@@ -895,7 +895,7 @@ function makeArmy() {
   }
 
   //display army in html doc
-  html += '</table>';
+  html += '</table><hr>';
 
   element.innerHTML = html;
 
@@ -958,7 +958,7 @@ function makeCombat() {
   combatText.splice(0, combatText.length);
 
   const element = document.getElementById('combat');
-  let html = `<h4> The Battle of ${place[getRandomInt(0, place.length)]} ${generateWord(10).toUpperCase()} </h4>`
+  let html = `<h4>The Battle of ${place[getRandomInt(0, place.length)]} ${generateWord(10).toUpperCase()}</h4>`
 
   html += `<ul>`;
 
