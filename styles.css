@@ -12,23 +12,52 @@ h1 {
     text-align: center;
     padding: 2em;
     margin: 0em 2em 0em 2em;
-    font-size: 1em;
+    font-size: 0.35em;
     
 }
 
 #army {
     text-align: center;
     padding: 0.5em;
-    margin: 0em 2em 0em 2em;
+    font-size: 0.25em;
+    /* margin: 0em 2em 0em 2em; */
     
+}
+
+.army-table {
+    border: 2px solid;
+    font-size: 0.25em;
+    border-radius: 1%;
+}
+
+.army-table tr th td {
+    padding: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 #combat {
     text-align: center;
     padding: 2em;
     margin: auto;
-    width: 50%;
-    font-size: 1em;
+    /* width: 50%; */
+    font-size: 0.35em;
+
+}
+
+.combat-log-list {
+    padding: 0.1em;
+}
+
+.combat-list-entry {
+    border: 2px solid;
+    border-radius: 2%;
+    margin: 0.25em;
+    padding: 1em;
+}
+
+.combat-list-entry:hover {
+    background-color: rgb(250, 250, 200);
 }
 
 .highlight {
@@ -75,7 +104,7 @@ h1 {
 
 .col {
     float: left;
-    width: 100%;
+    max-width: 45%;
 }
   
 /* Clear floats after the columns */
@@ -83,6 +112,7 @@ h1 {
     content: "";
     display: table;
     clear: both;
+    
 }
 
 h2 {
@@ -101,14 +131,8 @@ table {
 
 table, tr, td {
 
-    border: 1px solid;
-    font-size: 1em;
-    /*
-    margin-left: auto;
-    margin-right: auto;
-    */
     text-align: center;
-    padding: 1em;
+    border: 1px solid;
 
 }
 

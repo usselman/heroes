@@ -786,7 +786,7 @@ const armyB = [];
 
 function makeArmy() {
   const element = document.getElementById('army');
-  let html = `<h4>Army A</h4><table>  
+  let html = `<h4>Army A</h4><table class="army-table">  
   <th>Name:</th> 
   <th>Child Of:</th>
   <th>Weapon:</th>
@@ -844,7 +844,7 @@ function makeArmy() {
   //end ArmyA
 
   //ArmyB
-  html += `<h4>Army B</h4><table>  
+  html += `<h4>Army B</h4><table class="army-table">  
   <th>Name:</th> 
   <th>Child Of:</th>
   <th>Weapon:</th>
@@ -1016,11 +1016,11 @@ function makeCombat() {
   const element = document.getElementById('combat');
   let html = `<h4>The Battle of ${place[getRandomInt(0, place.length)]} ${generateWord(10).toUpperCase()}</h4>`
 
-  html += `<ul>`;
+  html += `<ul class="combat-log-list">`;
 
   for (let i = 0; i < armySize; i++){
     combat(armyA[i], armyB[i]);
-    html += `<p><li>${combatText[i]}</li></p>`;
+    html += `<p><li class="combat-list-entry">${combatText[i]}</li></p>`;
   }
   html += `</ul>`;
 
