@@ -36,8 +36,8 @@ function makeKings(leader) {
   leader.name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
   leader.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
   leader.title = `${title[getRandomInt(0, title.length)]}`;
-  leader.fullName = `King ${leader.name} ${leader.lastName} ${leader.title}`;
-  leader.dynasty = `${generateWord(2,8)}`;
+  leader.dynasty = `${generateWord(8)}`;
+  leader.fullName = `King ${leader.name} ${leader.lastName} ${leader.title} of House ${leader.dynasty}`;
   leader.kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
   return kings;
 };
