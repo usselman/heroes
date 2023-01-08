@@ -1031,8 +1031,7 @@ const eventText = [];
 
 function makeHappen(soldierA, soldierB) {
   let thing =
-  `In the histories of old, it is said that: 
-   In the year ${getRandomInt(1, 30)}
+  `In the year ${getRandomInt(1, 30)}
    of the reign of <span class="highlight">King ${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]} ${lastname[getRandomInt(0, lastname.length)]} ${title[getRandomInt(0, title.length)]}</span>,
    in the <span class="highlight">${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}</span>,
    <span class="nameA">${soldierA.fullName}</span> <span class="attack">${verb[getRandomInt(0, verb.length)]}</span> <span class="nameB">${soldierB.fullName}</span>.`
@@ -1043,13 +1042,13 @@ function makeHappen(soldierA, soldierB) {
 function printEvent() {
   eventText.splice(0, eventText.length);
   const element = document.getElementById('event');
-  let html = '<p class="event-list">';
+  let html = `<h3>In the histories of old, it is said that...</h3>`;
 
   for (let i = 0; i < armySize; i++){
     makeHappen(armyA[i], armyB[i]);
-    html += `<hr><p>${eventText[i]}</p><hr>`;
+    html += `<hr><p class='event-list'>${eventText[i]}</p><hr>`;
   }
-  html += '</p>';
+  html += ``;
 
   element.innerHTML = html;
 
