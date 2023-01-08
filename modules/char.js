@@ -6,28 +6,43 @@ import { generateWord } from './generateWord.js';
 let length;
 let thing;
 const armySize = 20;
-const amtKings = 10;
+const amtKings = 5;
 
-export function kings() {
-  for (let i=0; i<amtKings; i++){
-    var leaders = {
-      name: generateName(getRandomInt(1, 6)).toUpperCase() +
-      suffix[getRandomInt(0, suffix.length)],
-      lastName: lastname[getRandomInt(0, lastname.length)],
-      title: title[getRandomInt(0, title.length)],
-      fullName: `King ${kings.name} ${kings.lastName} ${kings.title}`,
-      dynasty: `${generateWord(2,8)}`,
-      kingdom: `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`
-    };
-    kings.push(leaders);
-  }
-  return kings;
+// export function kings(leaders) {
+//   for (let i=0; i<amtKings; i++){
+//     var leaders = {
+//       name: `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`,
+//       lastName: `${lastname[getRandomInt(0, lastname.length)]}`,
+//       title: `${title[getRandomInt(0, title.length)]}`,
+//       fullName: `King ${kings.name} ${kings.lastName} ${kings.title}`,
+//       dynasty: `${generateWord(2,8)}`,
+//       kingdom: `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`
+//     };
+//     kings.push(leaders);
+//   }
+//   return kings;
 
-}
+// }
 
 export function char(charSheet) {
 
-  charSheet.prefix = prefix[getRandomInt(0, prefix.length)];
+  function kings(leaders) {
+    kings.splice(0, kings.length);
+    for (let i=0; i<amtKings; i++){
+      var leaders = {
+        name: `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`,
+        lastName: `${lastname[getRandomInt(0, lastname.length)]}`,
+        title: `${title[getRandomInt(0, title.length)]}`,
+        fullName: `King ${kings.name} ${kings.lastName} ${kings.title}`,
+        dynasty: `${generateWord(2,8)}`,
+        kingdom: `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`
+      };
+      kings.push(leaders);
+    }
+    return kings;
+  }
+
+  charSheet.prefix = `${prefix[getRandomInt(0, prefix.length)]}`;
   charSheet.name =
     `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
   charSheet.lastName = `${lastname[getRandomInt(0, lastname.length)]}`; 
@@ -83,6 +98,7 @@ export function makeArmy() {
       faction: "",
       status: "Alive"
     };
+    
     char(character);
     
     armyA.push(character);
