@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel = "stylesheet" type = "text/css" href = "styles.css">
 
-    <script type="module" src="./modules/char.js"></script>
     <script type="module" src="./modules/material/buildingBlocks.js"></script>
+    <script type="module" src="./modules/char.js"></script>
     <script type="module" src="./modules/generateName.js"></script>
     <script type="module" src="./modules/generateWord.js"></script>
     <script type="module" src="./modules/arbitraryFunctions.js"></script>
@@ -23,7 +23,7 @@
       <button id="make-happen-button">Generate Story...</button>
       <script type="module">
         import { makeArmy, makeCombat, printEvent } from "./modules/char.js";
-        document.querySelector('#make-happen-button').addEventListener('click', () => {
+        document.querySelector('make-happen-button').addEventListener('click', () => {
              makeArmy(); makeCombat(); printEvent();
          });
       </script>

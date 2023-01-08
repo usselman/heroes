@@ -1,6 +1,6 @@
-import { getRandomInt } from "./arbitraryFunctions.js";
+import { getRandomInt } from './arbitraryFunctions.js';
 
-function alignment() {
+export function alignment() {
     switch (getRandomInt(1, 10)) {
       case 1:
         return "True Neutral";
