@@ -10,7 +10,7 @@
 
     <script type="text/javascript" src="./modules/alignment.js"></script>
     <script type="text/javascript" src="./modules/generateWord.js"></script>
-    <script type="text/javascript" src="./modules/modules.js"></script>
+    <script type="text/javascript" src="./modules/arbitraryFunctions.js"></script>
     
     <script nomodule>
       alert(`Your browser doesn't support native JavaScript modules.`);
@@ -23,7 +23,7 @@
       <!-- <input type="button" value="Generate Story..." onclick="makeArmy(); makeCombat(); printEvent();" /> -->
       <button id="make-happen-button">Generate Story...</button>
       <script type="module">
-        import { makeArmy, makeCombat, printEvent } from './modules/char.js';
+        import { makeArmy, makeCombat, printEvent } from "./modules/char.js";
         document.querySelector('#make-happen-button').addEventListener('click', () => {
              makeArmy(); makeCombat(); printEvent();
          });
