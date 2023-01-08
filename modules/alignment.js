@@ -1,3 +1,4 @@
+import { getRandomInt } from "./arbitraryFunctions.js";
 
 function alignment() {
     switch (getRandomInt(1, 10)) {
