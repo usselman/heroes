@@ -27,8 +27,8 @@ export function char(charSheet) {
   charSheet.HP = `${charSheet.VIT * 10}`;
   charSheet.prestige = `${getRandomInt(0, 101)}`;
   charSheet.birthplace =
-    `${kings[getRandomInt(amtKings).kingdom]}`;
-  charSheet.faction = `${kings[getRandomInt(0, amtKings)].fullName}`;
+    `${kings[getRandomInt(0, amtKings).kingdom]}`;
+  charSheet.faction = `${kings[getRandomInt(0, amtKings)].dynasty}`;
 }
 
 function makeKings(leader) {
@@ -65,7 +65,7 @@ export function makeArmy() {
   
   
   const element = document.getElementById('army');
-  let html = `<h4>Army of ${kings[0].fullName}</h4><table class="army-table">  
+  let html = `<h4>Army of <span class="highlight">${kings[0].fullName}</span></h4><table class="army-table">  
   <th>Name:</th> 
   <th>Child Of:</th>
   <th>Weapon:</th>
@@ -73,7 +73,8 @@ export function makeArmy() {
   <th>STR:</th>
   <th>DEX:</th>
   <th>Prestige:</th>
-  <th>Birthplace:</th>`
+  <th>Birthplace:</th>
+  <th>King:</th>`
 
   //clear array
   armyA.splice(0, armyA.length);
@@ -124,7 +125,7 @@ export function makeArmy() {
   //end ArmyA
 
   //ArmyB
-  html += `<h4>Army of ${kings[1].fullName}</h4><table class="army-table">  
+  html += `<h4>Army of <span class="highlight">${kings[1].fullName}</span></h4><table class="army-table">  
   <th>Name:</th> 
   <th>Child Of:</th>
   <th>Weapon:</th>
