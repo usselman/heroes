@@ -1,4 +1,5 @@
 import { letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks';
+import { generateWord } from './generateWord';
 
 export function generateName(sel) {
     var choice = sel;

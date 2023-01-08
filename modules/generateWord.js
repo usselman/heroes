@@ -1,4 +1,4 @@
-function generateWord(len) {
+export function generateWord(len) {
     length = getRandomInt(3, len);
   
     for (let i = 0; i < length; i++) {
