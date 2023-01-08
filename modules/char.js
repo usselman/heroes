@@ -14,7 +14,7 @@ export function char(charSheet) {
   charSheet.name =
     `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
   charSheet.lastName = `${lastname[getRandomInt(0, lastname.length)]}`; 
-  charSheet.title = `${title[getRandomInt(0, title.length)]}`;
+  charSheet.title = `"${title[getRandomInt(0, title.length)]}"`;
   charSheet.fullName = `${charSheet.prefix} ${charSheet.name} ${charSheet.lastName} ${charSheet.title}`;
   charSheet.childOf[0] =
     `${prefix[getRandomInt(0, prefix.length)]} ${generateName(getRandomInt(1, 6))}`;
@@ -34,7 +34,7 @@ function makeKings(leader) {
       
   leader.name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
   leader.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
-  leader.title = `${title[getRandomInt(0, title.length)]}`;
+  leader.title = `"${title[getRandomInt(0, title.length)]}"`;
   leader.dynasty = `${generateWord(8).toUpperCase()}`;
   leader.fullName = `King ${leader.name} ${leader.lastName} ${leader.title} of House ${leader.dynasty}`;
   leader.kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
