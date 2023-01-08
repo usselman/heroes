@@ -4,7 +4,7 @@ let length;
 let thing;
 const armySize = 2;
 
-function char(charSheet) {
+export function char(charSheet) {
 
   //let character = charSheet;
   charSheet.prefix = prefix[getRandomInt(0, prefix.length)];
@@ -36,7 +36,7 @@ function char(charSheet) {
 const armyA = [];
 const armyB = [];
 
-function makeArmy() {
+export function makeArmy() {
   const element = document.getElementById('army');
   let html = `<h4>Army A</h4><table class="army-table">  
   <th>Name:</th> 
@@ -156,7 +156,7 @@ function makeArmy() {
 
 }
 
-function showArmy() {
+export function showArmy() {
   for (let i=0; i<armySize; i++){
     console.log(armyA[i]);
     console.log(armyB[i]);
@@ -164,7 +164,7 @@ function showArmy() {
   //console.log(armyB);
 }
 
-function combat(soldierA, soldierB) {
+export function combat(soldierA, soldierB) {
   let text;
   let result;
   let hpA = soldierA.HP;
@@ -238,11 +238,7 @@ function combat(soldierA, soldierB) {
 
 const combatText = [];
 
-function diceRoll() {
-  return getRandomInt(0, 6);
-}
-
-function makeCombat() {
+export function makeCombat() {
   
   //clear array
   combatText.splice(0, combatText.length);
@@ -263,7 +259,7 @@ function makeCombat() {
 
 const eventText = [];
 
-function makeHappen(soldierA, soldierB) {
+export function makeHappen(soldierA, soldierB) {
   let thing =
   `In the year ${getRandomInt(1, 30)}
    of the reign of <span class="highlight">King ${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]} ${lastname[getRandomInt(0, lastname.length)]} ${title[getRandomInt(0, title.length)]}</span>,
@@ -273,7 +269,7 @@ function makeHappen(soldierA, soldierB) {
    eventText.push(thing);
 }
 
-function printEvent() {
+export function printEvent() {
   eventText.splice(0, eventText.length);
   const element = document.getElementById('event');
   let html = `<h3>In the histories of old, it is said that...</h3>`;

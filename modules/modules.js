@@ -5,4 +5,6 @@ function getRandomInt(min, max) {
     // The maximum is exclusive and the minimum is inclusive
   }
 
-  
+function diceRoll() {
+    return getRandomInt(0, 6);
+  } 
