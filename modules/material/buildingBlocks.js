@@ -1,3 +1,5 @@
+import { generateName } from '../generateName';
+
 const letters = [
   "b",
   "c",
