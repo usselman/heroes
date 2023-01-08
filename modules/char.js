@@ -26,8 +26,7 @@ export function char(charSheet) {
   charSheet.DEX = `${getRandomInt(1, 10)}`;
   charSheet.HP = `${charSheet.VIT * 10}`;
   charSheet.prestige = `${getRandomInt(0, 101)}`;
-  charSheet.birthplace =
-    `${kings[getRandomInt(0, amtKings).kingdom]}`;
+  charSheet.birthplace = `${kings[getRandomInt(0, amtKings)].kingdom}`;
   charSheet.faction = `House ${kings[getRandomInt(0, amtKings)].dynasty}`;
 }
 
@@ -36,7 +35,7 @@ function makeKings(leader) {
   leader.name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
   leader.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
   leader.title = `${title[getRandomInt(0, title.length)]}`;
-  leader.dynasty = `${generateWord(8)}`;
+  leader.dynasty = `${generateWord(8).toUpperCase()}`;
   leader.fullName = `King ${leader.name} ${leader.lastName} ${leader.title} of House ${leader.dynasty}`;
   leader.kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
   return kings;

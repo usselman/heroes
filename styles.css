@@ -2,6 +2,7 @@
 body {
     background-color: rgb(220, 220, 220);
     font-family:'Courier New', Courier, monospace; 
+    text-shadow: 2px;
 }
 
 header {
