@@ -952,15 +952,18 @@ function combat(soldierA, soldierB) {
     let dmgFirst = Math.floor(first.STR * first.VIT + (first.HP/10));
     let dmgSecond = Math.floor(second.STR * second.VIT + (second.HP/10));
 
+    second.HP = second.HP - dmgFirst;
+
     result+= 
     `<p><span class='nameA'>${first.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgFirst}DMG</span>!</p>
     <p><span class='nameB'>${second.name}</span> has <span class='highlight'>${Math.floor(second.HP)}HP</span> left.</p>`;
-    second.HP = second.HP - dmgFirst;
+
+    first.HP = first.HP - dmgSecond;
 
     result+= 
     `<p><span class='nameA'>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgSecond}DMG</span>!</p>
     <p><span class='nameB'>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left.</p>`;
-    first.HP = first.HP - dmgSecond;
+    
 
     result += `<span class='outcome'>`;
     if(first.HP <= 0) {
@@ -975,27 +978,6 @@ function combat(soldierA, soldierB) {
     result += `</span>`;
 
   }
-
-
-
-
-
-
-  // if (strA > strB) {
-  //   result += `<span class='name'> ${soldierA.prefix} ${soldierA.name} </span> killed 
-  //   <span class='name'> ${soldierB.prefix} ${soldierB.name}. </span>`;
-  //   soldierB.status = false;
-    
-  // }
-  // if (strB > strA) {
-  //   result += `<span class='name'> ${soldierB.prefix} ${soldierB.name} </span> killed 
-  //   <span class='name'> ${soldierA.prefix} ${soldierA.name}. </span>`;
-  //   soldierA.status = false;
-    
-  // }
-  // if (strB == strA) {
-  //   result += 'The battle was indecisive. Both were equally matched.'
-  // }
 
   result += `</span><hr><p>`
   text += result;
