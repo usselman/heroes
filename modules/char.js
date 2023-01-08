@@ -5,7 +5,7 @@ import { generateWord } from './generateWord.js';
 
 let length;
 let thing;
-const armySize = 2;
+const armySize = 20;
 
 export function char(charSheet) {
 
