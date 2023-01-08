@@ -161,7 +161,7 @@ table, tr, td {
 
     text-align: center;
     border: 1px solid;
-    padding: 1em;
+    /* padding: 1em; */
 }
 
 ul {
