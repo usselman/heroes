@@ -1,4 +1,7 @@
 import { letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks';
+import { getRandomInt } from './arbitraryFunctions';
+import { generateName } from './generateName';
+import { generateWord } from './generateWord';
 
 let length;
 let thing;
