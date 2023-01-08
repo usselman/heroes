@@ -1,4 +1,4 @@
-import { letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks.js';
+import { armyA, armyB, kings, prefix, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks.js';
 import { getRandomInt } from './arbitraryFunctions.js';
 import { generateName } from './generateName.js';
 import { generateWord } from './generateWord.js';
@@ -6,42 +6,50 @@ import { generateWord } from './generateWord.js';
 let length;
 let thing;
 const armySize = 20;
+const amtKings = 10;
+
+export function kings() {
+  for (let i=0; i<amtKings; i++){
+    var leaders = {
+      name: generateName(getRandomInt(1, 6)).toUpperCase() +
+      suffix[getRandomInt(0, suffix.length)],
+      lastName: lastname[getRandomInt(0, lastname.length)],
+      title: title[getRandomInt(0, title.length)],
+      fullName: `King ${kings.name} ${kings.lastName} ${kings.title}`,
+      dynasty: `${generateWord(2,8)}`,
+      kingdom: `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`
+    };
+    kings.push(leaders);
+  }
+
+}
 
 export function char(charSheet) {
 
-  //let character = charSheet;
   charSheet.prefix = prefix[getRandomInt(0, prefix.length)];
   charSheet.name =
-    generateName(getRandomInt(1, 6)).toUpperCase() +
-    suffix[getRandomInt(0, suffix.length)];
-  charSheet.lastName = lastname[getRandomInt(0, lastname.length)]; 
-  charSheet.title = title[getRandomInt(0, title.length)];
-  charSheet.fullName = charSheet.prefix + ' ' + charSheet.name + ' ' + charSheet.lastName + ' ' + charSheet.title;
+    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
+  charSheet.lastName = `${lastname[getRandomInt(0, lastname.length)]}`; 
+  charSheet.title = `${title[getRandomInt(0, title.length)]}`;
+  charSheet.fullName = `${charSheet.prefix} ${charSheet.name} ${charSheet.lastName} ${charSheet.title}`;
   charSheet.childOf[0] =
-    prefix[getRandomInt(0, prefix.length)] + generateName(getRandomInt(1, 6));
+    `${prefix[getRandomInt(0, prefix.length)]} ${generateName(getRandomInt(1, 6))}`;
   charSheet.childOf[1] =
-    prefix[getRandomInt(0, prefix.length)] +
-    generateName(getRandomInt(1, 6)) +
-    suffix[getRandomInt(0, suffix.length)] +
-    title[getRandomInt(0, title.length)];
-  charSheet.weapon = weapon[getRandomInt(0, weapon.length)];
-  charSheet.VIT = getRandomInt(5, 20);
-  charSheet.STR = getRandomInt(1, 10);
-  charSheet.DEX = getRandomInt(1, 10);
-  charSheet.HP = charSheet.VIT * 10;
-  charSheet.prestige = getRandomInt(0, 101);
+    `${prefix[getRandomInt(0, prefix.length)]} ${generateName(getRandomInt(1, 6))} ${suffix[getRandomInt(0, suffix.length)]} ${title[getRandomInt(0, title.length)]}`;
+  charSheet.weapon = `${weapon[getRandomInt(0, weapon.length)]}`;
+  charSheet.VIT = `${getRandomInt(5, 20)}`;
+  charSheet.STR = `${getRandomInt(1, 10)}`;
+  charSheet.DEX = `${getRandomInt(1, 10)}`;
+  charSheet.HP = `${charSheet.VIT * 10}`;
+  charSheet.prestige = `${getRandomInt(0, 101)}`;
   charSheet.birthplace =
-    place[getRandomInt(0, place.length)] +
-    " of " +
-    generateWord(8).toUpperCase();
+    `${kings[getRandomInt(amtKings).kingdom]}`;
+  charSheet.faction = `${kings[getRandomInt(amtKings)].fullName}`;
 }
-
-const armyA = [];
-const armyB = [];
 
 export function makeArmy() {
   const element = document.getElementById('army');
-  let html = `<h4>Army A</h4><table class="army-table">  
+  let html = `<h4>Army of ${kings[0].fullName}</h4><table class="army-table">  
   <th>Name:</th> 
   <th>Child Of:</th>
   <th>Weapon:</th>
@@ -86,7 +94,8 @@ export function makeArmy() {
     <td>${armyA[i].STR.toString()}</td>
     <td>${armyA[i].DEX.toString()}</td>
     <td>${armyA[i].prestige.toString()}</td>
-    <td>${armyA[i].birthplace.toString()}</td>`;
+    <td>${armyA[i].birthplace.toString()}</td>
+    <td>${armyA[i].faction.toString()}`;
 
     if (character.status) {
       html += `<tr>${soldier}</tr>`;
@@ -98,7 +107,7 @@ export function makeArmy() {
   //end ArmyA
 
   //ArmyB
-  html += `<h4>Army B</h4><table class="army-table">  
+  html += `<h4>Army of ${kings[1].fullName}</h4><table class="army-table">  
   <th>Name:</th> 
   <th>Child Of:</th>
   <th>Weapon:</th>
@@ -106,7 +115,8 @@ export function makeArmy() {
   <th>STR:</th>
   <th>DEX:</th>
   <th>Prestige:</th>
-  <th>Birthplace:</th>`
+  <th>Birthplace:</th>
+  <th>King:</th>`
 
   //clear array
   armyB.splice(0, armyB.length);
@@ -143,7 +153,8 @@ export function makeArmy() {
     <td>${armyB[i].STR.toString()}</td>
     <td>${armyB[i].DEX.toString()}</td>
     <td>${armyB[i].prestige.toString()}</td>
-    <td>${armyB[i].birthplace.toString()}</td>`;
+    <td>${armyB[i].birthplace.toString()}</td>
+    <td>${armyB[i].faction.toString()}</td>`;
 
     if (character.status) {
       html += `<tr>${soldier}</tr>`;

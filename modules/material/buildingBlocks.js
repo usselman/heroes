@@ -1,5 +1,9 @@
 import { generateName } from '../generateName.js';
 
+const armyA = [];
+const armyB = [];
+const kings = [];
+
 const letters = [
   "b",
   "c",
@@ -656,4 +660,4 @@ const verb = [
   "disputed the claim of ",
 ];
 
-export { letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb };
+export { armyA, armyB, kings, letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb };
