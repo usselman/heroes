@@ -31,25 +31,38 @@ export function char(charSheet) {
   charSheet.faction = `${kings[getRandomInt(0, amtKings)].fullName}`;
 }
 
+function makeKings(leader) {
+      
+  leader[i].name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
+  leader[i].lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
+  leader[i].title = `${title[getRandomInt(0, title.length)]}`;
+  leader[i].fullName = `King ${leader.name} ${leader.lastName} ${leader.title}`;
+  leader[i].dynasty = `${generateWord(2,8)}`;
+  leader[i].kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
+  return kings;
+};
+
+
+
 export function makeArmy() {
 
-  function makeKings() {
-    kings.splice(0, kings.length);
-    for (let i=0; i<amtKings; i++){
-      var leader = {
-        name: `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`,
-        lastName: `${lastname[getRandomInt(0, lastname.length)]}`,
-        title: `${title[getRandomInt(0, title.length)]}`,
-        fullName: `King ${leader.name} ${leader.lastName} ${leader.title}`,
-        dynasty: `${generateWord(2,8)}`,
-        kingdom: `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`
-      };
-      kings.push(leader);
+  //make kings
+  kings.splice(0, kings.length);  
+  for (let i=0; i<amtKings; i++){
+    var leader = {
+      name: "",
+      lastName: "",
+      title: "",
+      fullName: "",
+      dynasty: "",
+      kingdom: ""
     }
-    return kings;
+
+    makeKings(leader);
+    kings.push(leader);
   }
+
   
-  makeKings();
   
   const element = document.getElementById('army');
   let html = `<h4>Army of ${kings[0].fullName}</h4><table class="army-table">  
