@@ -26,7 +26,7 @@ const amtKings = 5;
 
 export function char(charSheet) {
 
-  function kings(leaders) {
+  function makeKings() {
     kings.splice(0, kings.length);
     for (let i=0; i<amtKings; i++){
       var leaders = {
@@ -41,7 +41,8 @@ export function char(charSheet) {
     }
     return kings;
   }
-
+  
+  makeKings();
   charSheet.prefix = `${prefix[getRandomInt(0, prefix.length)]}`;
   charSheet.name =
     `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
@@ -64,6 +65,7 @@ export function char(charSheet) {
 }
 
 export function makeArmy() {
+  
   const element = document.getElementById('army');
   let html = `<h4>Army of ${kings[0].fullName}</h4><table class="army-table">  
   <th>Name:</th> 
