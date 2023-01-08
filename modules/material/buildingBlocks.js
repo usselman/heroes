@@ -1,4 +1,4 @@
-import { generateName } from '../generateName';
+import { generateName } from '../generateName.js';
 
 const letters = [
   "b",

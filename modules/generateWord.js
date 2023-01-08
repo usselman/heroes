@@ -1,4 +1,4 @@
-import { getRandomInt } from './arbitraryFunctions';
+import { getRandomInt } from './arbitraryFunctions.js';
 
 export function generateWord(len) {
     length = getRandomInt(3, len);

@@ -1,6 +1,6 @@
-import { letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks';
-import { generateWord } from './generateWord';
-import { getRandomInt } from './arbitraryFunctions';
+import { letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks.js';
+import { generateWord } from './generateWord.js';
+import { getRandomInt } from './arbitraryFunctions.js';
 
 export function generateName(sel) {
     var choice = sel;
