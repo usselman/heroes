@@ -28,7 +28,7 @@ export function char(charSheet) {
   charSheet.prestige = `${getRandomInt(0, 101)}`;
   charSheet.birthplace =
     `${kings[getRandomInt(0, amtKings).kingdom]}`;
-  charSheet.faction = `${kings[getRandomInt(0, amtKings)].dynasty}`;
+  charSheet.faction = `House ${kings[getRandomInt(0, amtKings)].dynasty}`;
 }
 
 function makeKings(leader) {
@@ -74,7 +74,7 @@ export function makeArmy() {
   <th>DEX:</th>
   <th>Prestige:</th>
   <th>Birthplace:</th>
-  <th>King:</th>`
+  <th>Faction:</th>`
 
   //clear array
   armyA.splice(0, armyA.length);
@@ -134,7 +134,7 @@ export function makeArmy() {
   <th>DEX:</th>
   <th>Prestige:</th>
   <th>Birthplace:</th>
-  <th>King:</th>`
+  <th>Faction:</th>`
 
   //clear array
   armyB.splice(0, armyB.length);
