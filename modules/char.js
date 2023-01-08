@@ -21,6 +21,7 @@ export function kings() {
     };
     kings.push(leaders);
   }
+  return kings;
 
 }
 

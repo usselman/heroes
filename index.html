@@ -22,9 +22,9 @@
       <!-- <input type="button" value="Generate Story..." onclick="makeArmy(); makeCombat(); printEvent();" /> -->
       <button type="button" id="make-happen-button">Generate Story...</button>
       <script type="module">
-        import { makeArmy, makeCombat, printEvent } from "./modules/char.js";
+        import { kings, makeArmy, makeCombat, printEvent } from "./modules/char.js";
         document.querySelector('#make-happen-button').addEventListener('click', function(){
-          makeArmy(); makeCombat(); printEvent(); 
+          kings(); makeArmy(); makeCombat(); printEvent(); 
         });
       </script>
       <!-- <input type="button" value="Generate Combat" onclick="makeCombat()" />
