@@ -33,12 +33,12 @@ export function char(charSheet) {
 
 function makeKings(leader) {
       
-  leader[i].name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
-  leader[i].lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
-  leader[i].title = `${title[getRandomInt(0, title.length)]}`;
-  leader[i].fullName = `King ${leader.name} ${leader.lastName} ${leader.title}`;
-  leader[i].dynasty = `${generateWord(2,8)}`;
-  leader[i].kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
+  leader.name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
+  leader.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
+  leader.title = `${title[getRandomInt(0, title.length)]}`;
+  leader.fullName = `King ${leader.name} ${leader.lastName} ${leader.title}`;
+  leader.dynasty = `${generateWord(2,8)}`;
+  leader.kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
   return kings;
 };
 
@@ -56,7 +56,7 @@ export function makeArmy() {
       fullName: "",
       dynasty: "",
       kingdom: ""
-    }
+    };
 
     makeKings(leader);
     kings.push(leader);
