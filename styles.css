@@ -18,7 +18,7 @@ h1 {
     font-size: 1em;
     margin-left: auto;
     margin-right: auto;
-    max-width: 75%;
+    max-width: 80%;
     margin-bottom: 0.5em;
 }
 
@@ -34,7 +34,7 @@ h1 {
 #army {
     text-align: center;
     padding: 0.5em;
-    font-size: 0.25em;
+    font-size: 1em;
     /* margin: 0em 2em 0em 2em; */
     
 }
@@ -43,11 +43,11 @@ h1 {
     border: 2px solid;
     font-size: 0.5em;
     border-radius: 1%;
-    max-width: 80%;
+    max-width: 90%;
+    margin: 2em;
 }
 
 .army-table tr th td {
-    margin: 1em;
     padding: 1em;
     padding-left: 1em;
     padding-right: 1em;
@@ -59,13 +59,13 @@ h1 {
     padding: 2em;
     margin: auto;
     /* width: 50%; */
-    font-size: 0.35em;
+    font-size: 0.5em;
 
 }
 
 .combat-log-list {
     padding: 0.1em;
-    max-width: 80%;
+    max-width: 100%;
 }
 
 .combat-list-entry {
@@ -126,7 +126,7 @@ h1 {
 
 .col {
     float: left;
-    max-width: 45%;
+    max-width: 50%;
 }
 
 .row {
@@ -161,7 +161,7 @@ table, tr, td {
 
     text-align: center;
     border: 1px solid;
-
+    padding: 1em;
 }
 
 ul {
