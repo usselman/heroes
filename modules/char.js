@@ -8,22 +8,6 @@ let thing;
 const armySize = 20;
 const amtKings = 5;
 
-// export function kings(leaders) {
-//   for (let i=0; i<amtKings; i++){
-//     var leaders = {
-//       name: `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`,
-//       lastName: `${lastname[getRandomInt(0, lastname.length)]}`,
-//       title: `${title[getRandomInt(0, title.length)]}`,
-//       fullName: `King ${kings.name} ${kings.lastName} ${kings.title}`,
-//       dynasty: `${generateWord(2,8)}`,
-//       kingdom: `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`
-//     };
-//     kings.push(leaders);
-//   }
-//   return kings;
-
-// }
-
 export function char(charSheet) {
 
   charSheet.prefix = `${prefix[getRandomInt(0, prefix.length)]}`;
@@ -44,7 +28,7 @@ export function char(charSheet) {
   charSheet.prestige = `${getRandomInt(0, 101)}`;
   charSheet.birthplace =
     `${kings[getRandomInt(amtKings).kingdom]}`;
-  charSheet.faction = `${kings[getRandomInt(amtKings)].fullName}`;
+  charSheet.faction = `${kings[getRandomInt(0, amtKings)].fullName}`;
 }
 
 export function makeArmy() {
@@ -52,15 +36,15 @@ export function makeArmy() {
   function makeKings() {
     kings.splice(0, kings.length);
     for (let i=0; i<amtKings; i++){
-      var leaders = {
+      var leader = {
         name: `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`,
         lastName: `${lastname[getRandomInt(0, lastname.length)]}`,
         title: `${title[getRandomInt(0, title.length)]}`,
-        fullName: `King ${kings.name} ${kings.lastName} ${kings.title}`,
+        fullName: `King ${leader.name} ${leader.lastName} ${leader.title}`,
         dynasty: `${generateWord(2,8)}`,
         kingdom: `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`
       };
-      kings.push(leaders);
+      kings.push(leader);
     }
     return kings;
   }
