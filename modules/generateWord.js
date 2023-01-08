@@ -1,5 +1,5 @@
 import { getRandomInt } from './arbitraryFunctions.js';
-import { word } from './material/buildingBlocks.js';
+import { word, letters, vowels } from './material/buildingBlocks.js';
 
 export function generateWord(len) {
     length = getRandomInt(3, len);
