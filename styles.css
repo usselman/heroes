@@ -9,11 +9,17 @@ h1 {
 }
 
 #event {
-    text-align: center;
-    padding: 2em;
-    margin: 0em 2em 0em 2em;
-    font-size: 0.35em;
-    
+    text-align: justify;
+    font-size: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 75%;
+    margin-bottom: 0.5em;
+}
+
+.event-list {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #army {
@@ -26,14 +32,17 @@ h1 {
 
 .army-table {
     border: 2px solid;
-    font-size: 0.25em;
+    font-size: 0.5em;
     border-radius: 1%;
+    max-width: 80%;
 }
 
 .army-table tr th td {
-    padding: 0.5em;
+    margin: 1em;
+    padding: 1em;
     padding-left: 1em;
     padding-right: 1em;
+    max-height: 1em;
 }
 
 #combat {
@@ -47,6 +56,7 @@ h1 {
 
 .combat-log-list {
     padding: 0.1em;
+    max-width: 80%;
 }
 
 .combat-list-entry {
@@ -60,6 +70,10 @@ h1 {
     background-color: rgb(250, 250, 200);
 }
 
+#combat .outcome {
+    text-align: justify !important;
+}
+
 .highlight {
     color: green;
     font-weight: bold;   
@@ -70,8 +84,8 @@ h1 {
 }
 
 .attack {
-    color: red;
-    font-weight: bolder;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .dmg {
@@ -98,13 +112,17 @@ h1 {
 }
 
 .result {
-    font-style: italic;
     text-align: center;
 }
 
 .col {
     float: left;
     max-width: 45%;
+}
+
+.row {
+    margin-left: auto;
+    margin-right: auto;
 }
   
 /* Clear floats after the columns */
@@ -117,6 +135,7 @@ h1 {
 
 h2 {
     text-decoration: underline;
+    text-align: center;
 }
 
 h4 {
@@ -138,13 +157,8 @@ table, tr, td {
 
 ul {
     text-align: justify;
-    list-style-type: square;
+    list-style-type: none;
     display: inline-block;
-}
-
-ol {
-    text-align: justify;
-    list-style-type: upper-roman;
 }
 
 tr:hover {
