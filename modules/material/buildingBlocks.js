@@ -654,4 +654,4 @@ const verb = [
   "disputed the claim of ",
 ];
 
-//export { letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb };
+export { letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb };
