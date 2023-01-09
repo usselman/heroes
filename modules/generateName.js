@@ -7,7 +7,7 @@ export function generateName(sel) {
     switch (choice) {
       case 1:
         return (
-          name1[getRandomInt(0, name1.length)] + generateWord(getRandomInt(2, 5))
+          name1[getRandomInt(0, name1.length)] + vowels[getRandomInt(0, vowels.length)] + generateWord(getRandomInt(2, 5))
         );
         break;
       case 2:
