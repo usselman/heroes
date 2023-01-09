@@ -6,7 +6,7 @@ import { generateWord } from './generateWord.js';
 let length;
 let thing;
 const armySize = 20;
-const amtKings = 5;
+const amtKings = 12;
 
 export function char(charSheet) {
 
