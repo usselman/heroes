@@ -293,7 +293,7 @@ const eventText = [];
 export function makeHappen(soldierA, soldierB) {
   let thing =
   `In the year ${getRandomInt(1, 30)}
-   of the reign of <span class="highlight">King ${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]} ${lastname[getRandomInt(0, lastname.length)]} ${title[getRandomInt(0, title.length)]}</span>,
+   of the reign of <span class="highlight">${kings[getRandomInt(0, amtKings)].fullName}</span>,
    in the <span class="highlight">${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}</span>,
    <span class="nameA">${soldierA.fullName}</span> <span class="attack">${verb[getRandomInt(0, verb.length)]}</span> <span class="nameB">${soldierB.fullName}</span>.`
   
