@@ -41,8 +41,6 @@ function makeKings(leader) {
   return kings;
 };
 
-
-
 export function makeArmy() {
 
   //make kings
@@ -208,9 +206,9 @@ export function combat(soldierA, soldierB) {
   let second;
   
   text =
-  `<span class='name'> ${soldierA.fullName} </span> 
-  wielding a <span class='highlight'> ${soldierA.weapon} </span> 
-  fought <span class='name'> ${soldierB.fullName} </span>
+  `<span class='name'>${soldierA.fullName}</span> 
+  wielding a <span class='highlight'>${soldierA.weapon}</span> 
+  fought <span class='name'>${soldierB.fullName}</span>
   wielding a <span class='highlight'>${soldierB.weapon}</span>: <hr>`;
 
   result = `<span class='result'>`;
@@ -250,12 +248,12 @@ export function combat(soldierA, soldierB) {
 
     result += `<span class='outcome'>`;
     if(first.HP <= 0) {
-      result += `<span class='name'> ${second.prefix} ${second.name} </span> killed 
-      <span class='name'> ${first.prefix} ${first.name}. </span>`;
+      result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
+      <span class='name'>${first.prefix} ${first.name}. </span>`;
       first.status = false;
     } else if (second.HP <= 0) {
-      result += `<span class='name'> ${first.prefix} ${first.name} </span> killed 
-      <span class='name'> ${second.prefix} ${second.name}. </span>`;
+      result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
+      <span class='name'>${second.prefix} ${second.name}. </span>`;
       second.status = false;
     }
     result += `</span>`;
@@ -303,6 +301,12 @@ export function makeHappen(soldierA, soldierB) {
 export function printEvent() {
   eventText.splice(0, eventText.length);
   const element = document.getElementById('event');
+
+  let kingLog = `<h3>The great kings who rule today...</h3>`;
+  for (let i = 0; i < amtKings; i++){
+    kingLog += `<hr><p class='event-list'>${kings[i].fullName} of ${kings[i].kingdom}.</p></hr>`
+  }
+
   let html = `<h3>In the histories of old, it is said that...</h3>`;
 
   for (let i = 0; i < armySize; i++){
@@ -311,6 +315,6 @@ export function printEvent() {
   }
   html += ``;
 
-  element.innerHTML = html;
+  element.innerHTML = kingLog + html;
 
 }
