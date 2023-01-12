@@ -8,20 +8,20 @@ export function generateName(sel) {
       case 1:
         return (
           name1[getRandomInt(0, name1.length)] + vowels[getRandomInt(0, vowels.length)] + generateWord(getRandomInt(2, 5))
-        );
+        ).toUpperCase;
         break;
       case 2:
         return (
           name1[getRandomInt(0, name1.length)] +
           name2[getRandomInt(0, name2.length)]
-        );
+        ).toUpperCase;
         break;
       case 3:
         return (
           name1[getRandomInt(0, name1.length)] +
           name2[getRandomInt(0, name2.length / 2)] +
           name3[getRandomInt(0, name3.length / 2)]
-        );
+        ).toUpperCase;
         break;
       case 4:
         return (
@@ -29,7 +29,7 @@ export function generateName(sel) {
           name2[getRandomInt(0, name2.length / 2)] +
           name3[getRandomInt(0, name3.length / 2)] +
           name2[getRandomInt(0, name2.length / 4)]
-        );
+        ).toUpperCase;
         break;
       case 5:
         return (
@@ -37,7 +37,7 @@ export function generateName(sel) {
           name2[getRandomInt(0, name2.length / 2)] +
           name3[getRandomInt(0, name3.length / 4)] +
           name3[getRandomInt(0, name3.length)]
-        );
+        ).toUpperCase;
         break;
     }
   }
