@@ -198,7 +198,6 @@ export function showArmy() {
 export function combat(soldierA, soldierB) {
   let text;
   let result;
-  let outcome;
   let hpA = soldierA.HP;
   let hpB = soldierB.HP;
   let strA = soldierA.STR;
@@ -276,16 +275,17 @@ export function combat(soldierA, soldierB) {
   result += `</span><hr><p>`;
   text += result;
   text += `<p>
-          The army of <span class="highlight">${kings[1].fullName}</span> lost ${armyAkilled} soldiers.
-           The army of <span class="highlight">${kings[2].fullName}</span> lost ${armyBkilled} soldiers.
+          The army of <span class="highlight">${kings[1].fullName}</span> lost <b>${armyAkilled}</b> soldiers.
+           The army of <span class="highlight">${kings[2].fullName}</span> lost <b>${armyBkilled}</b> soldiers.
            </p>`
-  text += outcome;
   combatText.push(text);
 }
 
 const combatText = [];
+let outcome;
 
 export function makeCombat() {
+  
   
   //clear array
   combatText.splice(0, combatText.length);
@@ -300,6 +300,7 @@ export function makeCombat() {
     html += `<p><li class="combat-list-entry">${combatText[i]}</li></p>`;
   }
   html += `</ul>`;
+  html += outcome;
 
   element.innerHTML = html;
 }
