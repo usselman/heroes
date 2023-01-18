@@ -198,6 +198,7 @@ export function showArmy() {
 export function combat(soldierA, soldierB) {
   let text;
   let result;
+  let outcome;
   let hpA = soldierA.HP;
   let hpB = soldierB.HP;
   let strA = soldierA.STR;
@@ -234,7 +235,7 @@ export function combat(soldierA, soldierB) {
 
     let dmgFirst = Math.floor(first.STR * first.VIT + (first.HP/10));
     let dmgSecond = Math.floor(second.STR * second.VIT + (second.HP/10));
-    let outcome;
+    
 
     second.HP = second.HP - dmgFirst;
 
