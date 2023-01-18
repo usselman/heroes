@@ -6,7 +6,7 @@ import { generateWord } from './generateWord.js';
 let length;
 let thing;
 const armySize = 20;
-const amtKings = 12;
+const amtKings = 6;
 
 export function char(charSheet) {
 
@@ -14,7 +14,7 @@ export function char(charSheet) {
   charSheet.name =
     `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
   charSheet.lastName = `${lastname[getRandomInt(0, lastname.length)]}`; 
-  charSheet.title = `"${title[getRandomInt(0, title.length)]}"`;
+  charSheet.title = `<i>${title[getRandomInt(0, title.length)]}</i>`;
   charSheet.fullName = `${charSheet.prefix} ${charSheet.name} ${charSheet.lastName} ${charSheet.title}`;
   charSheet.childOf[0] =
     `${prefix[getRandomInt(0, prefix.length)]} ${generateName(getRandomInt(1, 6))}`;
@@ -34,7 +34,7 @@ function makeKings(leader) {
       
   leader.name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
   leader.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
-  leader.title = `"${title[getRandomInt(0, title.length)]}"`;
+  leader.title = `<i>${title[getRandomInt(0, title.length)]}</i>`;
   leader.dynasty = `${generateWord(8).toUpperCase()}`;
   leader.fullName = `King ${leader.name} ${leader.lastName} ${leader.title} of House ${leader.dynasty}`;
   leader.kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
@@ -62,7 +62,7 @@ export function makeArmy() {
   
   
   const element = document.getElementById('army');
-  let html = `<h4>Army of <span class="highlight">${kings[0].fullName}</span></h4><table class="army-table">  
+  let html = `<div class="col"><h4>Army of <span class="highlight">${kings[0].fullName}</span></h4><table class="army-table">  
   <th>Name:</th> 
   <th>Child Of:</th>
   <th>Weapon:</th>
@@ -118,11 +118,11 @@ export function makeArmy() {
   }
 
   //display army in html doc
-  html += '</table><hr>';
+  html += '</table><hr></div>';
   //end ArmyA
 
   //ArmyB
-  html += `<h4>Army of <span class="highlight">${kings[1].fullName}</span></h4><table class="army-table">  
+  html += `<div class="col"><h4>Army of <span class="highlight">${kings[1].fullName}</span></h4><table class="army-table">  
   <th>Name:</th> 
   <th>Child Of:</th>
   <th>Weapon:</th>
@@ -177,7 +177,7 @@ export function makeArmy() {
   }
 
   //display army in html doc
-  html += '</table><hr>';
+  html += '</table><hr></div>';
 
   element.innerHTML = html;
 
