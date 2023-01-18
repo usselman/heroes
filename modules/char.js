@@ -320,7 +320,7 @@ export function printEvent() {
 
   let kingLog = `<h3>The great kings who rule today...</h3>`;
   for (let i = 0; i < amtKings; i++){
-    kingLog += `<hr><p class='event-list'><span class='name'>${kings[i].fullName}</span> of <span class="highlight">${kings[i].kingdom}</span>.</p><hr>`
+    kingLog += `<hr><p class='event-list'><span class='highlight'>${kings[i].fullName}</span> of <span class="name">${kings[i].kingdom}</span>.</p><hr>`
   }
 
   let html = `<h3>In the histories of old, it is said that...</h3>`;
