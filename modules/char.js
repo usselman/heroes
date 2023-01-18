@@ -7,6 +7,8 @@ let length;
 let thing;
 const armySize = 20;
 const amtKings = 6;
+var armyAkilled = 0;
+var armyBkilled = 0;
 
 export function char(charSheet) {
 
@@ -232,6 +234,7 @@ export function combat(soldierA, soldierB) {
 
     let dmgFirst = Math.floor(first.STR * first.VIT + (first.HP/10));
     let dmgSecond = Math.floor(second.STR * second.VIT + (second.HP/10));
+    let outcome;
 
     second.HP = second.HP - dmgFirst;
 
@@ -251,17 +254,30 @@ export function combat(soldierA, soldierB) {
       result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
       <span class='name'>${first.prefix} ${first.name}. </span>`;
       first.status = false;
+      armyAkilled += 1;
     } else if (second.HP <= 0) {
       result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
       <span class='name'>${second.prefix} ${second.name}. </span>`;
       second.status = false;
+      armyBkilled += 1;
     }
     result += `</span>`;
-
   }
 
-  result += `</span><hr><p>`
+  result += `</span><hr><p>`;
   text += result;
+  if (armyAkilled > armyBkilled) {
+    outcome = `The army of <span class="highlight">${kings[1].fullName}</span> won.`
+  } else if (armyBkilled > armyAkilled) {
+    outcome = `The army of <span class="highlight">${kings[2].fullName}</span> won.`
+  } else if (armyAkilled = armyAkilled) {
+    outcome = `The battle was indecisive.`
+  }
+  text += `<p>
+          The army of <span class="highlight">${kings[1].fullName}</span> lost ${armyAkilled} soldiers.
+           The army of <span class="highlight">${kings[2].fullName}</span> lost ${armyBkilled} soldiers.
+           </p>`
+  text += `<p>${outcome}</p>`;
   combatText.push(text);
 }
 
