@@ -265,9 +265,9 @@ export function combat(soldierA, soldierB) {
   }
 
   if (armyAkilled > armyBkilled) {
-    outcome = `<p>The army of <span class="highlight">${kings[1].fullName}</span> won.</p>`
-  } else if (armyBkilled > armyAkilled) {
     outcome = `<p>The army of <span class="highlight">${kings[2].fullName}</span> won.</p>`
+  } else if (armyBkilled > armyAkilled) {
+    outcome = `<p>The army of <span class="highlight">${kings[1].fullName}</span> won.</p>`
   } else if (armyAkilled = armyAkilled) {
     outcome = `<p>The battle was indecisive.</p>`
   }
@@ -321,12 +321,12 @@ export function printEvent() {
   eventText.splice(0, eventText.length);
   const element = document.getElementById('event');
 
-  let kingLog = `<h3>The great kings who rule today...</h3>`;
+  let kingLog = `<h2>The great kings who rule today...</h2>`;
   for (let i = 0; i < amtKings; i++){
     kingLog += `<hr><p class='event-list'><span class='highlight'>${kings[i].fullName}</span> of <span class="name">${kings[i].kingdom}</span>.</p><hr>`
   }
 
-  let html = `<h3>In the histories of old, it is said that...</h3>`;
+  let html = `<h2>In the histories of old, it is said that...</h2>`;
 
   for (let i = 0; i < armySize; i++){
     makeHappen(armyA[i], armyB[i]);
