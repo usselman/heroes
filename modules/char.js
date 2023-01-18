@@ -207,9 +207,6 @@ export function combat(soldierA, soldierB) {
   let speedB = soldierB.DEX;
   let first;
   let second;
-
-  armyAkilled = 0;
-  armyBkilled = 0;
   
   text =
   `<span class='name'>${soldierA.fullName}</span> 
@@ -305,8 +302,10 @@ export function makeCombat() {
   }
   html += `</ul>`;
   html += outcome;
-
   element.innerHTML = html;
+  //reinit army deaths
+  armyAkilled = 0;
+  armyBkilled = 0;
 }
 
 const eventText = [];
