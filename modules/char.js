@@ -5,7 +5,7 @@ import { generateWord } from './generateWord.js';
 
 let length;
 let thing;
-const armySize = 20;
+const armySize = 100;
 const amtKings = 6;
 var armyAkilled = 0;
 var armyBkilled = 0;
@@ -196,6 +196,7 @@ export function showArmy() {
 }
 
 export function combat(soldierA, soldierB) {
+
   let text;
   let result;
   let hpA = soldierA.HP;
@@ -206,6 +207,9 @@ export function combat(soldierA, soldierB) {
   let speedB = soldierB.DEX;
   let first;
   let second;
+
+  armyAkilled = 0;
+  armyBkilled = 0;
   
   text =
   `<span class='name'>${soldierA.fullName}</span> 
