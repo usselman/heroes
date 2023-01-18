@@ -264,20 +264,21 @@ export function combat(soldierA, soldierB) {
     result += `</span>`;
   }
 
+  if (armyAkilled > armyBkilled) {
+    outcome = `<p>The army of <span class="highlight">${kings[1].fullName}</span> won.</p>`
+  } else if (armyBkilled > armyAkilled) {
+    outcome = `<p>The army of <span class="highlight">${kings[2].fullName}</span> won.</p>`
+  } else if (armyAkilled = armyAkilled) {
+    outcome = `<p>The battle was indecisive.</p>`
+  }
+
   result += `</span><hr><p>`;
   text += result;
-  if (armyAkilled > armyBkilled) {
-    outcome = `The army of <span class="highlight">${kings[1].fullName}</span> won.`
-  } else if (armyBkilled > armyAkilled) {
-    outcome = `The army of <span class="highlight">${kings[2].fullName}</span> won.`
-  } else if (armyAkilled = armyAkilled) {
-    outcome = `The battle was indecisive.`
-  }
   text += `<p>
           The army of <span class="highlight">${kings[1].fullName}</span> lost ${armyAkilled} soldiers.
            The army of <span class="highlight">${kings[2].fullName}</span> lost ${armyBkilled} soldiers.
            </p>`
-  text += `<p>${outcome}</p>`;
+  text += outcome;
   combatText.push(text);
 }
 
