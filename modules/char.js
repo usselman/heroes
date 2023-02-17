@@ -5,7 +5,7 @@ import { generateWord } from './generateWord.js';
 
 let length;
 let thing;
-const armySize = 100;
+const armySize = 25;
 const amtKings = 6;
 var armyAkilled = 0;
 var armyBkilled = 0;
@@ -15,7 +15,7 @@ export function char(charSheet) {
   charSheet.prefix = `${prefix[getRandomInt(0, prefix.length)]}`;
   charSheet.name =
     `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
-  charSheet.lastName = `${lastname[getRandomInt(0, lastname.length)]}`; 
+  charSheet.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
   charSheet.title = `<i>${title[getRandomInt(0, title.length)]}</i>`;
   charSheet.fullName = `${charSheet.prefix} ${charSheet.name} ${charSheet.lastName} ${charSheet.title}`;
   charSheet.childOf[0] =
@@ -33,7 +33,7 @@ export function char(charSheet) {
 }
 
 function makeKings(leader) {
-      
+
   leader.name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
   leader.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
   leader.title = `<i>${title[getRandomInt(0, title.length)]}</i>`;
@@ -46,8 +46,8 @@ function makeKings(leader) {
 export function makeArmy() {
 
   //make kings
-  kings.splice(0, kings.length);  
-  for (let i=0; i<amtKings; i++){
+  kings.splice(0, kings.length);
+  for (let i = 0; i < amtKings; i++) {
     var leader = {
       name: "",
       lastName: "",
@@ -61,8 +61,8 @@ export function makeArmy() {
     kings.push(leader);
   }
 
-  
-  
+
+
   const element = document.getElementById('army');
   let html = `<div class="col"><h4>Army of <span class="highlight">${kings[0].fullName}</span></h4><table class="army-table">  
   <th>Name:</th> 
@@ -98,13 +98,13 @@ export function makeArmy() {
       faction: "",
       status: "Alive"
     };
-    
+
     char(character);
-    
+
     armyA.push(character);
 
-    let soldier = 
-    `<td>${armyA[i].fullName.toString()}</td>
+    let soldier =
+      `<td>${armyA[i].fullName.toString()}</td>
     <td>${armyA[i].childOf[0].toString()} and ${armyA[i].childOf[1].toString()}</td>
     <td>${armyA[i].weapon.toString()}</td>
     <td>${armyA[i].VIT.toString()}</td>
@@ -159,11 +159,11 @@ export function makeArmy() {
       status: true
     };
     char(character);
-    
+
     armyB.push(character);
 
-    let soldier = 
-    `<td>${armyB[i].fullName.toString()}</td>
+    let soldier =
+      `<td>${armyB[i].fullName.toString()}</td>
     <td>${armyB[i].childOf[0].toString()} and ${armyB[i].childOf[1].toString()}</td>
     <td>${armyB[i].weapon.toString()}</td>
     <td>${armyB[i].VIT.toString()}</td>
@@ -188,7 +188,7 @@ export function makeArmy() {
 }
 
 export function showArmy() {
-  for (let i=0; i<armySize; i++){
+  for (let i = 0; i < armySize; i++) {
     console.log(armyA[i]);
     console.log(armyB[i]);
   }
@@ -207,51 +207,51 @@ export function combat(soldierA, soldierB) {
   let speedB = soldierB.DEX;
   let first;
   let second;
-  
+
   text =
-  `<span class='name'>${soldierA.fullName}</span> 
+    `<span class='name'>${soldierA.fullName}</span> 
   wielding a <span class='highlight'>${soldierA.weapon}</span> 
   fought <span class='name'>${soldierB.fullName}</span>
   wielding a <span class='highlight'>${soldierB.weapon}</span>: <hr>`;
 
   result = `<span class='result'>`;
-  result += 
-  `<p><span class='nameA'>${soldierA.name}</span> has <span class='highlight'>${soldierA.HP}HP</span> -
+  result +=
+    `<p><span class='nameA'>${soldierA.name}</span> has <span class='highlight'>${soldierA.HP}HP</span> -
   <span class='nameB'>${soldierB.name}</span> has <span class='highlight'>${soldierB.HP}HP</span>.</p>`
 
   //---------------------//
   //conditions for combat//
   //---------------------//
 
-  if(speedA > speedB) {
+  if (speedA > speedB) {
     first = soldierA;
     second = soldierB;
-  }else {
+  } else {
     first = soldierB;
     second = soldierA;
   }
 
-  while(first.status && second.status) {
+  while (first.status && second.status) {
 
-    let dmgFirst = Math.floor(first.STR * first.VIT + (first.HP/10));
-    let dmgSecond = Math.floor(second.STR * second.VIT + (second.HP/10));
-    
+    let dmgFirst = Math.floor(first.STR * first.VIT + (first.HP / 10));
+    let dmgSecond = Math.floor(second.STR * second.VIT + (second.HP / 10));
+
 
     second.HP = second.HP - dmgFirst;
 
-    result+= 
-    `<p><span class='nameA'>${first.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgFirst}DMG</span>!</p>
+    result +=
+      `<p><span class='nameA'>${first.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgFirst}DMG</span>!</p>
     <p><span class='nameB'>${second.name}</span> has <span class='highlight'>${Math.floor(second.HP)}HP</span> left.</p>`;
 
     first.HP = first.HP - dmgSecond;
 
-    result+= 
-    `<p><span class='nameA'>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgSecond}DMG</span>!</p>
+    result +=
+      `<p><span class='nameA'>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgSecond}DMG</span>!</p>
     <p><span class='nameB'>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left.</p>`;
-    
+
 
     result += `<span class='outcome'>`;
-    if(first.HP <= 0) {
+    if (first.HP <= 0) {
       result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
       <span class='name'>${first.prefix} ${first.name}. </span>`;
       first.status = false;
@@ -286,8 +286,8 @@ const combatText = [];
 let outcome;
 
 export function makeCombat() {
-  
-  
+
+
   //clear array
   combatText.splice(0, combatText.length);
 
@@ -296,7 +296,7 @@ export function makeCombat() {
 
   html += `<ul class="combat-log-list">`;
 
-  for (let i = 0; i < armySize; i++){
+  for (let i = 0; i < armySize; i++) {
     combat(armyA[i], armyB[i]);
     html += `<p><li class="combat-list-entry">${combatText[i]}</li></p>`;
   }
@@ -312,12 +312,12 @@ const eventText = [];
 
 export function makeHappen(soldierA, soldierB) {
   let thing =
-  `In the year ${getRandomInt(1, 30)}
+    `In the year ${getRandomInt(1, 30)}
    of the reign of <span class="highlight">${kings[getRandomInt(0, amtKings)].fullName}</span>,
    in the <span class="highlight">${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}</span>,
    <span class="nameA">${soldierA.fullName}</span> <span class="attack">${verb[getRandomInt(0, verb.length)]}</span> <span class="nameB">${soldierB.fullName}</span>.`
-  
-   eventText.push(thing);
+
+  eventText.push(thing);
 }
 
 export function printEvent() {
@@ -325,13 +325,13 @@ export function printEvent() {
   const element = document.getElementById('event');
 
   let kingLog = `<h2>The great kings who rule today...</h2>`;
-  for (let i = 0; i < amtKings; i++){
+  for (let i = 0; i < amtKings; i++) {
     kingLog += `<hr><p class='event-list'><span class='highlight'>${kings[i].fullName}</span> of <span class="name">${kings[i].kingdom}</span>.</p><hr>`
   }
 
   let html = `<h2>In the histories of old, it is said that...</h2>`;
 
-  for (let i = 0; i < armySize; i++){
+  for (let i = 0; i < armySize; i++) {
     makeHappen(armyA[i], armyB[i]);
     html += `<hr><p class='event-list'>${eventText[i]}</p><hr>`;
   }
