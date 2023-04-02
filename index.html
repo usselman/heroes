@@ -26,7 +26,13 @@
         document.querySelector('#make-happen-button').addEventListener('click', function(){
           makeArmy(); makeCombat(); printEvent(); 
         });
+        $(document).ready(function(){
+        $("#make-happen-button").click(function(){
+          makeArmy(); makeCombat(); printEvent(); 
+        });
+      });
       </script>
+      
       <!-- <input type="button" value="Generate Combat" onclick="makeCombat()" />
       <input type="button" value="Generate Events" onclick="printEvent()" /> -->
     </form>
