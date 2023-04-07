@@ -265,7 +265,7 @@ const name3 = [
 ];
 
 const word = [];
-const prefix = [
+const prefixes = [
   "",
   "Sir",
   "Madame",
@@ -691,4 +691,4 @@ const verb = [
   "disputed the claim of ",
 ];
 
-export { armyA, armyB, kings, letters, vowels, name1, name2, name3, word, prefix, lastname, suffix, title, weapon, place, verb };
+export { armyA, armyB, kings, letters, vowels, name1, name2, name3, word, prefixes, lastname, suffix, title, weapon, place, verb };

@@ -1,62 +1,19 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel = "stylesheet" type = "text/css" href = "styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
 
-    <script defer type="module" src="./modules/material/buildingBlocks.js"></script>
-    <script defer type="module" src="./modules/char.js"></script>
-    <script defer type="module" src="./modules/generateName.js"></script>
-    <script defer type="module" src="./modules/generateWord.js"></script>
-    <script defer type="module" src="./modules/arbitraryFunctions.js"></script>
-    <script defer type="module" src="./modules/alignment.js"></script>
-    
     <script nomodule>
       alert(`Your browser doesn't support native JavaScript modules.`);
     </script>
   </head>
 
-  <body style="text-align: center">
+  <body>
     <h1>Heroes of Fantasia</h1>
-    <form style="font-size: 50px">
-      <!-- <input type="button" value="Generate Story..." onclick="makeArmy(); makeCombat(); printEvent();" /> -->
-      <button type="button" id="make-happen-button">Generate Story...</button>
-      <script type="module">
-        import { makeArmy, makeCombat, printEvent } from "./modules/char.js";
-        document.querySelector('#make-happen-button').addEventListener('click', function(){
-          makeArmy(); makeCombat(); printEvent(); 
-        });
-        $(document).ready(function(){
-        $("#make-happen-button").click(function(){
-          makeArmy(); makeCombat(); printEvent(); 
-        });
-      });
-      </script>
-      
-      <!-- <input type="button" value="Generate Combat" onclick="makeCombat()" />
-      <input type="button" value="Generate Events" onclick="printEvent()" /> -->
-    </form>
-    <header>
-
-    </header>
-
-    <main>
-      <div class="row">
-        <div id="event">
-              
-        </div>
-      </div>
-      <div class="row">
-        <div id="army">
-            
-        </div>
-      </div>
-      <div class="row"></div>
-        <div id="combat">
-
-        </div>
-      </div>
-    </main>
-
+    <canvas></canvas>
+    <script src="./game.js"></script>
   </body>
 </html>
