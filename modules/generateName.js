@@ -1,4 +1,4 @@
-import { letters, vowels, name1, name2, name3, word, prefixes, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks.js';
+import { letters, vowels, name1, name2, name3, word, prefixes, LAST_NAMES, SUFFIXES, TITLES, weapon, PLACES, verb } from './material/buildingBlocks.js';
 import { generateWord } from './generateWord.js';
 import { getRandomInt } from './arbitraryFunctions.js';
 

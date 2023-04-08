@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script nomodule>
       alert(`Your browser doesn't support native JavaScript modules.`);
     </script>
@@ -13,7 +15,10 @@
 
   <body>
     <h1>Heroes of Fantasia</h1>
-    <canvas></canvas>
-    <script src="./game.js"></script>
+    <canvas> </canvas>
+
+    <script type="module" src="game.js"></script>
+    <script type="module" src="modules/char.js"></script>
+    <button id="create_a_king">01</button>
   </body>
 </html>

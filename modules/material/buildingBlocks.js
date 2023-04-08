@@ -342,29 +342,14 @@ const prefixes = [
   "",
   "",
 ];
-const lastname = [
-  "",
-  " " + generateName(2, 6).toUpperCase(),
-  " " + generateName(2, 6).toUpperCase(),
-  " " + generateName(2, 6).toUpperCase(),
-  " " + generateName(2, 6).toUpperCase(),
-  " " + generateName(2, 6).toUpperCase(),
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
+const LAST_NAMES = [
+  generateName(2, 6).toUpperCase(),
+  generateName(2, 6).toUpperCase(),
+  generateName(2, 6).toUpperCase(),
+  generateName(2, 6).toUpperCase(),
+  generateName(2, 6).toUpperCase()
 ];
-const suffix = [
+const SUFFIXES = [
   "",
   "I",
   "II",
@@ -391,7 +376,7 @@ const suffix = [
   "",
   "",
 ];
-const title = [
+const TITLES = [
   "",
   "the Warrior",
   "the Builder",
@@ -598,7 +583,7 @@ const weapon = [
   "Holy Flail",
 ];
 
-const place = [
+const PLACES = [
   "village",
   "town",
   "land",
@@ -651,7 +636,7 @@ const verb = [
   "was forced to abdicate their lands to ",
   "gave a county to ",
   "gave a fiefdom to ",
-  "gave a title to ",
+  "gave a TITLES to ",
   "gave land to ",
   "betrothed one of their children to ",
   "stole something precious from ",
@@ -691,4 +676,4 @@ const verb = [
   "disputed the claim of ",
 ];
 
-export { armyA, armyB, kings, letters, vowels, name1, name2, name3, word, prefixes, lastname, suffix, title, weapon, place, verb };
+export { armyA, armyB, kings, letters, vowels, name1, name2, name3, word, prefixes, LAST_NAMES, SUFFIXES, TITLES, weapon, PLACES, verb };

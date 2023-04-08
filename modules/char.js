@@ -1,4 +1,4 @@
-import { armyA, armyB, kings, prefixes, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks.js';
+import { armyA, armyB, kings, prefixes, LAST_NAMES, SUFFIXES, TITLES, weapon, PLACES, verb } from './material/buildingBlocks.js';
 import { getRandomInt } from './arbitraryFunctions.js';
 import { generateName } from './generateName.js';
 import { generateWord } from './generateWord.js';
@@ -9,6 +9,9 @@ const ARMY_SIZE = 42;
 const AMOUNT_KINGS = 10;
 var armyAkilled = 0;
 var armyBkilled = 0;
+
+let CHARACTERS = [];
+let LEADERS = [];
 
 /*
 
@@ -24,7 +27,7 @@ class Character {
     prefix,
     name,
     lastName,
-    title,
+    TITLES,
     fullName,
     childOf,
     weapon,
@@ -44,7 +47,7 @@ class Character {
     this.prefix = prefix;
     this.name = name;
     this.lastName = lastName;
-    this.title = title;
+    this.TITLES = TITLES;
     this.fullName = fullName;
     this.childOf = [];
     this.weapon = weapon;
@@ -65,58 +68,45 @@ class Character {
 }
 
 class Leader {
-  constructor(name, lastName, title, fullName, dynasty, kingdom) {
+  constructor(name, dynasty, title, fullName, kingdom) {
     this.name = name;
-    this.lastName = lastName;
-    this.title = title;
-    this.fullName = fullName;
     this.dynasty = dynasty;
+    this.title = title;
+    this.fullName = `${name} of House ${dynasty}`;
     this.kingdom = kingdom;
   }
+
+  deleteAKing() {
+
+  }
+
+
+
 }
 
 /*
 ********** KING GENERATION **********
+1. From the generated kings come the seeds of all characters.
+  - Kings need to define dynasties
+  - Kings need to define royal houses
+  - Kings need to set the roots of prestige
+
 */
 
+export function createAKing() {
 
-
-export function makeKings(leader) {
-
-  var leader = new Leader();
-
-  let { name, lastName, title, fullName, dynasty, kingdom } = leader;
-
-  name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
-  lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
-  title = `<i>${title[getRandomInt(0, title.length)]}</i>`;
-  dynasty = `${generateWord(8).toUpperCase()}`;
-  fullName = `King ${name} ${lastName} ${title} of House ${dynasty}`;
-  kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
-  console.log(kings);
-  kings.push(leader);
-  return kings;
-
-
-};
-
-export function setKings() {
-  //make kings
-  kings.splice(0, kings.length);
-  for (let i = 0; i < AMOUNT_KINGS; i++) {
-
-    // var leader = {
-    //   name: "",
-    //   lastName: "",
-    //   title: "",
-    //   fullName: "",
-    //   dynasty: "",
-    //   kingdom: ""
-    // };
-
-    makeKings();
-
-  }
+  let leader = new Leader(
+    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
+    `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //dynasty
+    `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
+    //full name
+    "",
+    `${PLACES[getRandomInt(0, PLACES.length)]} of ${generateWord(8).toUpperCase()}`,
+  )
+  LEADERS.push(leader);
+  console.log(leader);
+  console.log(LEADERS);
+  return LEADERS;
 }
 
 /*
@@ -128,19 +118,19 @@ export function char(charSheet) {
   let character = new Character()
 
   // let {
-  //   prefix, name, lastName, title, fullName, childOf, weapon, HP, VIT, STR, DEX, prestige, birthplace, faction
+  //   prefix, name, lastName, TITLES, fullName, childOf, weapon, HP, VIT, STR, DEX, prestige, birthplace, faction
   // } = character;
 
   character.prefix = `${prefixes[getRandomInt(0, prefixes.length)]}`;
   character.name =
-    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
-  character.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
-  character.title = `<i>${title[getRandomInt(0, title.length)]}</i>`;
-  character.fullName = `${character.prefix} ${character.name} ${character.lastName} ${character.title}`;
+    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`;
+  character.lastName = `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`;
+  character.TITLES = `<i>${TITLES[getRandomInt(0, TITLES.length)]}</i>`;
+  character.fullName = `${character.prefix} ${character.name} ${character.lastName} ${character.TITLES}`;
   character.childOf[0] =
     `${prefixes[getRandomInt(0, prefixes.length)]} ${generateName(getRandomInt(1, 6))}`;
   character.childOf[1] =
-    `${prefixes[getRandomInt(0, prefixes.length)]} ${generateName(getRandomInt(1, 6))} ${suffix[getRandomInt(0, suffix.length)]} ${title[getRandomInt(0, title.length)]}`;
+    `${prefixes[getRandomInt(0, prefixes.length)]} ${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]} ${TITLES[getRandomInt(0, TITLES.length)]}`;
   character.weapon = `${weapon[getRandomInt(0, weapon.length)]}`;
   character.VIT = `${getRandomInt(5, 20)}`;
   character.STR = `${getRandomInt(1, 10)}`;
@@ -183,7 +173,7 @@ export function makeArmy() {
     //   prefix: "",
     //   name: "",
     //   lastName: "",
-    //   title: "",
+    //   TITLES: "",
     //   fullName: "",
     //   childOf: [],
     //   weapon: "",
@@ -247,7 +237,7 @@ export function makeArmy() {
     //   prefix: "",
     //   name: "",
     //   lastName: "",
-    //   title: "",
+    //   TITLES: "",
     //   fullName: "",
     //   childOf: [],
     //   weapon: "",
@@ -398,7 +388,7 @@ export function makeCombat() {
   combatText.splice(0, combatText.length);
 
   const element = document.getElementById('combat');
-  let html = `<h1>At the Battle of <span class="highlight">${place[getRandomInt(0, place.length)]} ${generateWord(10).toUpperCase()}</span>...</h1>`
+  let html = `<h1>At the Battle of <span class="highlight">${PLACES[getRandomInt(0, PLACES.length)]} ${generateWord(10).toUpperCase()}</span>...</h1>`
 
   html += `<ul class="combat-log-list">`;
 
@@ -420,7 +410,7 @@ export function makeHappen(soldierA, soldierB) {
   let thing =
     `In the year ${getRandomInt(1, 30)}
    of the reign of <span class="highlight">${kings[getRandomInt(0, AMOUNT_KINGS)].fullName}</span>,
-   in the <span class="highlight">${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}</span>,
+   in the <span class="highlight">${PLACES[getRandomInt(0, PLACES.length)]} of ${generateWord(8).toUpperCase()}</span>,
    <span class="nameA">${soldierA.fullName}</span> <span class="attack">${verb[getRandomInt(0, verb.length)]}</span> <span class="nameB">${soldierB.fullName}</span>.`
 
   eventText.push(thing);
