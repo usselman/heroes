@@ -343,11 +343,11 @@ const prefixes = [
   "",
 ];
 const LAST_NAMES = [
+  generateName(2, 8).toUpperCase(),
   generateName(2, 6).toUpperCase(),
+  generateName(2, 10).toUpperCase(),
   generateName(2, 6).toUpperCase(),
-  generateName(2, 6).toUpperCase(),
-  generateName(2, 6).toUpperCase(),
-  generateName(2, 6).toUpperCase()
+  generateName(2, 8).toUpperCase()
 ];
 const SUFFIXES = [
   "",

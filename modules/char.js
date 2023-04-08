@@ -27,7 +27,7 @@ class Character {
     prefix,
     name,
     lastName,
-    TITLES,
+    title,
     fullName,
     childOf,
     weapon,
@@ -47,17 +47,17 @@ class Character {
     this.prefix = prefix;
     this.name = name;
     this.lastName = lastName;
-    this.TITLES = TITLES;
-    this.fullName = fullName;
+    this.title = title;
+    this.fullName = `${prefix} ${name} ${lastName} ${title}`;
     this.childOf = [];
     this.weapon = weapon;
-    this.HP = HP;
+    this.HP = VIT * 10;
     this.VIT = VIT;
     this.STR = STR;
     this.DEX = DEX;
     this.prestige = prestige;
-    this.birthplace = birthplace;
-    this.faction = faction;
+    this.birthplace = `Kingdom of ${LEADERS[getRandomInt(0, LEADERS.length)].kingdom}`;
+    this.faction = `House ${LEADERS[getRandomInt(0, LEADERS.length)].dynasty}`;
     this.status = status;
 
     this.traits = traits;
@@ -81,7 +81,6 @@ class Leader {
   }
 
 
-
 }
 
 /*
@@ -100,8 +99,8 @@ export function createAKing() {
     `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //dynasty
     `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
     //full name
-    "",
-    `${PLACES[getRandomInt(0, PLACES.length)]} of ${generateWord(8).toUpperCase()}`,
+    null,
+    `${generateWord(8).toUpperCase()}`,
   )
   LEADERS.push(leader);
   console.log(leader);
@@ -113,36 +112,28 @@ export function createAKing() {
 ********** SOLDIER GENERATION **********
 */
 
-export function char(charSheet) {
+export function createAChar() {
 
-  let character = new Character()
-
-  // let {
-  //   prefix, name, lastName, TITLES, fullName, childOf, weapon, HP, VIT, STR, DEX, prestige, birthplace, faction
-  // } = character;
-
-  character.prefix = `${prefixes[getRandomInt(0, prefixes.length)]}`;
-  character.name =
-    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`;
-  character.lastName = `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`;
-  character.TITLES = `<i>${TITLES[getRandomInt(0, TITLES.length)]}</i>`;
-  character.fullName = `${character.prefix} ${character.name} ${character.lastName} ${character.TITLES}`;
-  character.childOf[0] =
-    `${prefixes[getRandomInt(0, prefixes.length)]} ${generateName(getRandomInt(1, 6))}`;
-  character.childOf[1] =
-    `${prefixes[getRandomInt(0, prefixes.length)]} ${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]} ${TITLES[getRandomInt(0, TITLES.length)]}`;
-  character.weapon = `${weapon[getRandomInt(0, weapon.length)]}`;
-  character.VIT = `${getRandomInt(5, 20)}`;
-  character.STR = `${getRandomInt(1, 10)}`;
-  character.DEX = `${getRandomInt(1, 10)}`;
-  character.HP = `${charSheet.VIT * 10}`;
-  character.prestige = `${getRandomInt(0, 101)}`;
-  character.birthplace = `${kings[getRandomInt(0, AMOUNT_KINGS)].kingdom}`;
-  character.faction = `House ${kings[getRandomInt(0, AMOUNT_KINGS)].dynasty}`;
-  console.log(charSheet.prefix);
-  armyA.push(character);
-
-  return charSheet;
+  let character = new Character(
+    `${prefixes[getRandomInt(0, prefixes.length)]}`, //prefix
+    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
+    `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //lastname
+    `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
+    "", //fullname
+    "", //childOf
+    `${weapon[getRandomInt(0, weapon.length)]}`, //weapon 
+    "", //HP
+    `${getRandomInt(5, 20)}`, //VIT
+    `${getRandomInt(1, 10)}`, //STR
+    `${getRandomInt(1, 10)}`, //DEX
+    `${getRandomInt(0, 101)}`, //prestige
+    "", //birthplace
+    "", //faction
+  )
+  console.log(character);
+  CHARACTERS.push(character);
+  console.log(CHARACTERS);
+  return CHARACTERS;
 }
 
 
@@ -436,3 +427,5 @@ export function printEvent() {
   element.innerHTML = kingLog + html;
 
 }
+
+export { CHARACTERS, LEADERS };
