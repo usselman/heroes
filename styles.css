@@ -18,6 +18,19 @@ canvas {
     display: block;
   }
 
+  #card-text {
+    text-align: center;
+    font-size: 1em;
+    margin: 0em 2em 0em 2em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 1%;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+  }
+
 #event {
     text-align: justify;
     font-size: 1em;

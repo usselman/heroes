@@ -81,6 +81,15 @@ class Leader {
   }
 
 
+  toString() {
+    return `-
+    ${this.fullName} ${this.title}
+     Kingdom of: ${this.kingdom} 
+     House of: ${this.dynasty} 
+    - `;
+  };
+
+
 }
 
 /*
@@ -122,11 +131,11 @@ export function createAChar() {
     "", //fullname
     "", //childOf
     `${weapon[getRandomInt(0, weapon.length)]}`, //weapon 
-    "", //HP
-    `${getRandomInt(5, 20)}`, //VIT
-    `${getRandomInt(1, 10)}`, //STR
-    `${getRandomInt(1, 10)}`, //DEX
-    `${getRandomInt(0, 101)}`, //prestige
+    null, //HP
+    getRandomInt(5, 20), //VIT
+    getRandomInt(1, 10), //STR
+    getRandomInt(1, 10), //DEX
+    getRandomInt(0, 101), //prestige
     "", //birthplace
     "", //faction
   )
