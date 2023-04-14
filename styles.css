@@ -1,8 +1,38 @@
 
 body {
-    background-color: rgb(220, 220, 220);
+    background-color: rgb(200, 200, 200);
     font-family:'Courier New', Courier, monospace; 
     text-shadow: 2px;
+}
+
+#player-box {
+    text-align: center;
+    font-size: 1em;
+    margin: 0em 2em 0em 2em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+}
+
+#enemy-box {
+    text-align: center;
+    font-size: 1em;
+    margin: 0em 2em 0em 2em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+}
+
+#stats {
+   text-align: left;
 }
 
 header {
@@ -30,6 +60,50 @@ canvas {
     margin-right: auto;
     margin-bottom: 0.5em;
   }
+
+.event-log {
+    text-align: center;
+    display: inside;
+    font-size: 1em;
+    margin: 0em 2em 0em 2em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+    max-width: 90%;
+    margin-top: 5em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+    background-color: rgb(255, 252, 252);
+}
+
+#combat-log {
+    margin-top: 5em;
+    text-align: center;
+    display: absolute;
+    height: 50em;
+    max-width: 90%;
+    font-size: 0.5em;
+}
+
+#create{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#fight {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* DISAPPEARING EVENT TEXT
+#event-text {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+} */
 
 #event {
     text-align: justify;
@@ -106,8 +180,17 @@ canvas {
     font-weight: bold;   
 }
 
+.highlight-red {
+    color: red;
+    font-weight: bold;   
+}
+
 .highlight:hover {
     background-color: rgb(250, 250, 200);
+}
+
+.highlight-red:hover {
+    background-color: rgb(250, 200, 250);
 }
 
 .attack {

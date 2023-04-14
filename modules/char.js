@@ -23,6 +23,27 @@ let LEADERS = [];
 */
 
 class Character {
+
+  prefix;
+  name;
+  lastName;
+  title;
+  fullName;
+  childOf;
+  weapon;
+  HP;
+  VIT;
+  STR;
+  DEX;
+  prestige;
+  birthplace;
+  faction;
+  status;
+  traits;
+  items;
+  relationships;
+  eventLog;
+
   constructor(
     prefix,
     name,
@@ -65,6 +86,11 @@ class Character {
     this.relationships = relationships;
     this.eventLog = eventLog;
   }
+  whoAmI() {
+    return `I am ${this.fullName} of ${this.faction}
+      and I am from the ${this.birthplace}.
+      I have ${this.prestige} prestige in ${this.faction}.`;
+  }
 }
 
 class Leader {
@@ -80,14 +106,17 @@ class Leader {
 
   }
 
-
-  toString() {
+  whoAmI() {
     return `-
     ${this.fullName} ${this.title}
      Kingdom of: ${this.kingdom} 
      House of: ${this.dynasty} 
     - `;
   };
+
+  toJSON() {
+    return JSON.stringify(this);
+  }
 
 
 }
@@ -104,16 +133,16 @@ class Leader {
 export function createAKing() {
 
   let leader = new Leader(
-    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
+    `${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
     `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //dynasty
     `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
     //full name
     null,
-    `${generateWord(8).toUpperCase()}`,
+    `${generateWord(8).toUpperCase()}`, //generate kingdom name
   )
   LEADERS.push(leader);
-  console.log(leader);
-  console.log(LEADERS);
+  //console.log(leader);
+  //console.log(LEADERS);
   return LEADERS;
 }
 
@@ -125,7 +154,7 @@ export function createAChar() {
 
   let character = new Character(
     `${prefixes[getRandomInt(0, prefixes.length)]}`, //prefix
-    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
+    `${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
     `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //lastname
     `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
     "", //fullname
@@ -138,13 +167,18 @@ export function createAChar() {
     getRandomInt(0, 101), //prestige
     "", //birthplace
     "", //faction
+    "Alive", //status 
   )
-  console.log(character);
+  //console.log(character);
   CHARACTERS.push(character);
-  console.log(CHARACTERS);
+  //console.log(CHARACTERS);
   return CHARACTERS;
 }
 
+export function createAnArmy() {
+
+
+}
 
 
 export function makeArmy() {
@@ -283,14 +317,6 @@ export function makeArmy() {
 ********** ARMY DISPLAY **********
 */
 
-export function showArmy() {
-  for (let i = 0; i < ARMY_SIZE; i++) {
-    console.log(armyA[i]);
-    console.log(armyB[i]);
-  }
-  //console.log(armyB);
-}
-
 export function combat(soldierA, soldierB) {
 
   let text;
@@ -361,21 +387,25 @@ export function combat(soldierA, soldierB) {
     result += `</span>`;
   }
 
-  if (armyAkilled > armyBkilled) {
-    outcome = `<p>The army of <span class="highlight">${kings[1].fullName}</span> won.</p>`
-  } else if (armyBkilled > armyAkilled) {
-    outcome = `<p>The army of <span class="highlight">${kings[0].fullName}</span> won.</p>`
-  } else if (armyAkilled = armyAkilled) {
-    outcome = `<p>The battle was indecisive.</p>`
-  }
+  // if (armyAkilled > armyBkilled) {
+  //   outcome = `<p>The army of <span class="highlight">${LEADERS[1].fullName}</span> won.</p>`
+  // } else if (armyBkilled > armyAkilled) {
+  //   outcome = `<p>The army of <span class="highlight">${LEADERS[0].fullName}</span> won.</p>`
+  // } else if (armyAkilled = armyAkilled) {
+  //   outcome = `<p>The battle was indecisive.</p>`
+  // }
 
   result += `</span><hr><p>`;
   text += result;
-  text += `<p>
-          The army of <span class="highlight">${kings[0].fullName}</span> lost <b>${armyAkilled}</b> soldiers.
-           The army of <span class="highlight">${kings[1].fullName}</span> lost <b>${armyBkilled}</b> soldiers.
-           </p>`
+  // text += `<p>
+  //         The army of <span class="highlight">${LEADERS[0].fullName}</span> lost <b>${armyAkilled}</b> soldiers.
+  //          The army of <span class="highlight">${LEADERS[1].fullName}</span> lost <b>${armyBkilled}</b> soldiers.
+  //          </p>`
   combatText.push(text);
+  //combatText = text;
+  //console.log(combatText);
+  return combatText;
+
 }
 
 const combatText = [];
@@ -437,4 +467,4 @@ export function printEvent() {
 
 }
 
-export { CHARACTERS, LEADERS };
+export { CHARACTERS, LEADERS, combatText };
