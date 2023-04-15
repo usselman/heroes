@@ -39,6 +39,7 @@ class Character {
   birthplace;
   faction;
   status;
+  alive;
   traits;
   items;
   relationships;
@@ -60,6 +61,7 @@ class Character {
     birthplace,
     faction,
     status,
+    alive,
     traits,
     items,
     relationships,
@@ -80,6 +82,7 @@ class Character {
     this.birthplace = `Kingdom of ${LEADERS[getRandomInt(0, LEADERS.length)].kingdom}`;
     this.faction = `House ${LEADERS[getRandomInt(0, LEADERS.length)].dynasty}`;
     this.status = status;
+    this.alive = alive;
 
     this.traits = traits;
     this.items = items;
@@ -90,6 +93,27 @@ class Character {
     return `I am ${this.fullName} of ${this.faction}
       and I am from the ${this.birthplace}.
       I have ${this.prestige} prestige in ${this.faction}.`;
+  }
+  attack(target) {
+    const hitRoll = getRandomInt(1, 21); // 1d20 roll to hit
+    const damageRoll = getRandomInt(1, this.STR + 1); // 1d(STR+1) roll for damage
+
+    if (hitRoll >= target.DEX) { // the attack hits if the hit roll is greater than or equal to the target's DEX score
+      target.HP -= damageRoll; // apply damage to target
+      this.eventLog.push(`${this.fullName} hits ${target.fullName} for ${damageRoll} damage.`);
+      if (target.HP <= 0) { // target dies if their HP falls to or below 0
+        target.alive = false;
+        this.eventLog.push(`${target.fullName} has been defeated!`);
+        return true; // return true to indicate that the target has been defeated
+      }
+      else {
+        return false; // return false to indicate that the attack hit but the target is still alive
+      }
+    }
+    else { // the attack misses if the hit roll is less than the target's DEX score
+      this.eventLog.push(`${this.fullName} misses ${target.fullName}!`);
+      return false; // return false to indicate that the attack missed
+    }
   }
 }
 
@@ -117,8 +141,117 @@ class Leader {
   toJSON() {
     return JSON.stringify(this);
   }
+}
 
+class PlayerCharacter extends Character {
+  level;
+  equipment;
 
+  constructor(
+    prefix,
+    name,
+    lastName,
+    title,
+    fullName,
+    childOf,
+    weapon,
+    HP,
+    VIT,
+    STR,
+    DEX,
+    prestige,
+    birthplace,
+    faction,
+    status,
+    alive,
+    traits,
+    items,
+    relationships,
+    eventLog,
+    level,
+    equipment
+  ) {
+    super(
+      prefix,
+      name,
+      lastName,
+      title,
+      fullName,
+      childOf,
+      weapon,
+      HP,
+      VIT,
+      STR,
+      DEX,
+      prestige,
+      birthplace,
+      faction,
+      status,
+      alive,
+      traits,
+      items,
+      relationships,
+      eventLog
+    );
+    this.level = level;
+    this.equipment = equipment;
+  }
+
+}
+
+class EnemyCharacter extends Character {
+  level;
+  equipment;
+
+  constructor(
+    prefix,
+    name,
+    lastName,
+    title,
+    fullName,
+    childOf,
+    weapon,
+    HP,
+    VIT,
+    STR,
+    DEX,
+    prestige,
+    birthplace,
+    faction,
+    status,
+    alive,
+    traits,
+    items,
+    relationships,
+    eventLog,
+    level,
+    equipment
+  ) {
+    super(
+      prefix,
+      name,
+      lastName,
+      title,
+      fullName,
+      childOf,
+      weapon,
+      HP,
+      VIT,
+      STR,
+      DEX,
+      prestige,
+      birthplace,
+      faction,
+      status,
+      alive,
+      traits,
+      items,
+      relationships,
+      eventLog
+    );
+    this.level = level;
+    this.equipment = equipment;
+  }
 }
 
 /*
@@ -150,9 +283,8 @@ export function createAKing() {
 ********** SOLDIER GENERATION **********
 */
 
-export function createAChar() {
-
-  let character = new Character(
+export function createPlayerChar() {
+  let character = new PlayerCharacter(
     `${prefixes[getRandomInt(0, prefixes.length)]}`, //prefix
     `${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
     `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //lastname
@@ -168,6 +300,34 @@ export function createAChar() {
     "", //birthplace
     "", //faction
     "Alive", //status 
+    true, //alive
+  )
+  //console.log(character);
+  CHARACTERS.push(character);
+  //console.log(CHARACTERS);
+  return CHARACTERS;
+
+}
+
+export function createAChar() {
+
+  let character = new EnemyCharacter(
+    `${prefixes[getRandomInt(0, prefixes.length)]}`, //prefix
+    `${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
+    `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //lastname
+    `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
+    "", //fullname
+    "", //childOf
+    `${weapon[getRandomInt(0, weapon.length)]}`, //weapon 
+    null, //HP
+    getRandomInt(5, 20), //VIT
+    getRandomInt(1, 10), //STR
+    getRandomInt(1, 10), //DEX
+    getRandomInt(0, 101), //prestige
+    "", //birthplace
+    "", //faction
+    "Alive", //status 
+    true, //alive
   )
   //console.log(character);
   CHARACTERS.push(character);
@@ -329,6 +489,11 @@ export function combat(soldierA, soldierB) {
   let speedB = soldierB.DEX;
   let first;
   let second;
+  let turn = 0;
+
+
+  // Will execute myCallback every 1 seconds 
+  //var intervalID = window.setInterval(combat(), 1000);
 
   text =
     `<span class='name'>${soldierA.fullName}</span> 
@@ -353,54 +518,64 @@ export function combat(soldierA, soldierB) {
     second = soldierA;
   }
 
-  while (first.status && second.status) {
-
-    let dmgFirst = Math.floor(first.STR * first.VIT + (first.HP / 10));
-    let dmgSecond = Math.floor(second.STR * second.VIT + (second.HP / 10));
-
-
-    second.HP = second.HP - dmgFirst;
-
+  while (first.alive && (turn === 0)) {
+    turn = 1;
+    let dmg = Math.floor(first.STR * first.VIT + (first.HP / 10));
+    second.HP = second.HP - dmg;
     result +=
-      `<p><span class='nameA'>${first.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgFirst}DMG</span>!</p>
-    <p><span class='nameB'>${second.name}</span> has <span class='highlight'>${Math.floor(second.HP)}HP</span> left.</p>`;
+      `<p><span>${first.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmg}DMG</span>!
+      so,
+      <span>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left. ${second.name}</span> has <span class='highlight'>${Math.floor(second.HP)}HP</span> left.</p>`;
 
-    first.HP = first.HP - dmgSecond;
-
-    result +=
-      `<p><span class='nameA'>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgSecond}DMG</span>!</p>
-    <p><span class='nameB'>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left.</p>`;
-
-
-    result += `<span class='outcome'>`;
     if (first.HP <= 0) {
+      first.HP = 0;
+      first.alive = false;
       result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
       <span class='name'>${first.prefix} ${first.name}. </span>`;
-      first.status = false;
-      armyAkilled += 1;
-    } else if (second.HP <= 0) {
-      result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
-      <span class='name'>${second.prefix} ${second.name}. </span>`;
-      second.status = false;
-      armyBkilled += 1;
+
     }
-    result += `</span>`;
   }
 
-  // if (armyAkilled > armyBkilled) {
-  //   outcome = `<p>The army of <span class="highlight">${LEADERS[1].fullName}</span> won.</p>`
-  // } else if (armyBkilled > armyAkilled) {
-  //   outcome = `<p>The army of <span class="highlight">${LEADERS[0].fullName}</span> won.</p>`
-  // } else if (armyAkilled = armyAkilled) {
-  //   outcome = `<p>The battle was indecisive.</p>`
+  while (second && (turn === 1)) {
+    turn = 0;
+    let dmg = Math.floor(second.STR * second.VIT + (second.HP / 10));
+    first.HP = first.HP - dmg;
+    result +=
+      `<p><span>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmg}DMG</span>!
+      so,    
+      <span>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left. ${Math.floor(second.name)} has ${Math.floor(second.HP)} left.</p>`;
+
+    if (second.HP <= 0) {
+      second.HP = 0;
+      second.alive = false;
+      result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
+      <span class='name'>${second.prefix} ${second.name}. </span>`;
+
+    }
+  }
+
+
+  // while (first.alive && second.alive) {
+
+  //   result += `<span class='outcome'>`;
+  //   if (first.HP <= 0) {
+  //     first.HP = 0;
+  //     first.alive = false;
+  //     result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
+  //     <span class='name'>${first.prefix} ${first.name}. </span>`;
+
+  //   } else if (second.HP <= 0) {
+  //     second.HP = 0;
+  //     second.alive = false;
+  //     result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
+  //     <span class='name'>${second.prefix} ${second.name}. </span>`;
+
+  //   }
+  //   result += `</span>`;
   // }
 
   result += `</span><hr><p>`;
   text += result;
-  // text += `<p>
-  //         The army of <span class="highlight">${LEADERS[0].fullName}</span> lost <b>${armyAkilled}</b> soldiers.
-  //          The army of <span class="highlight">${LEADERS[1].fullName}</span> lost <b>${armyBkilled}</b> soldiers.
-  //          </p>`
   combatText.push(text);
   //combatText = text;
   //console.log(combatText);
@@ -410,6 +585,16 @@ export function combat(soldierA, soldierB) {
 
 const combatText = [];
 let outcome;
+
+export function removeDeadChars() {
+  const index = CHARACTERS.findIndex(char => !char.alive);
+  if (index > -1) {
+    CHARACTERS.splice(index, 1);
+  }
+  console.log(CHARACTERS);
+
+}
+
 
 export function makeCombat() {
 

@@ -81,19 +81,19 @@ canvas {
     margin-top: 5em;
     text-align: center;
     display: absolute;
-    height: 50em;
+    height: 20em;
     max-width: 90%;
     font-size: 0.5em;
 }
 
 #create{
-    width: 100%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
 
 #fight {
-    width: 100%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -104,6 +104,10 @@ canvas {
     opacity: 0;
     transition: visibility 0s 2s, opacity 2s linear;
 } */
+#controls {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 #event {
     text-align: justify;
@@ -183,6 +187,11 @@ canvas {
 .highlight-red {
     color: red;
     font-weight: bold;   
+}
+
+.highlight-blue {
+    color: blue;
+    font-weight: bold;
 }
 
 .highlight:hover {

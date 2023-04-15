@@ -35,7 +35,7 @@
   crossorigin="anonymous"></script>
 
     <h1>Heroes of Fantasia</h1>
-    <div id="game">
+    <div id="game" class="container">
       <div class="row align-items-start">
         <div class="col">
           <div id="player-box">
@@ -90,16 +90,21 @@
           <span id="text-line-2" class="highlight-red"></span></br>
         </div>
       </div>
+      
       <div id="controls">
-        <div class="row">
+        <div class="row align-items-start" >
           <div class="col">
-            <button id="create">Create!</button>
+            <button id="create-player">Create Player!</button>
+          </div>
+          <div class="col">
+            <button id="create-enemies">Create Enemies!</button>
           </div>
           <div class="col">
             <button id="fight">Fight!</button>
           </div>  
         </div>
       </div>
+    </div>
     <script type="module" src="game.js"></script>
     <script type="module" src="modules/char.js"></script>
   </body>
