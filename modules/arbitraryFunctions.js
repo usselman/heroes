@@ -5,8 +5,8 @@ export function getRandomInt(min, max) {
   // The maximum is exclusive and the minimum is inclusive
 }
 
-// export function diceRoll() {
-//     return getRandomInt(0, 6);
-//   } 
+export function capitalizeFirstLetter(element, index, array) {
+  array[index] = element[0].toUpperCase() + element.substring(1);
+}
 
 export let diceRoll = () => getRandomInt(0, 6);

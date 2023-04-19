@@ -1,199 +1,488 @@
-import { armyA, armyB, kings, prefix, lastname, suffix, title, weapon, place, verb } from './material/buildingBlocks.js';
-import { getRandomInt } from './arbitraryFunctions.js';
+import { armyA, armyB, kings, prefixes, LAST_NAMES, SUFFIXES, TITLES, weapon, PLACES, verb } from './material/buildingBlocks.js';
+import { getRandomInt, capitalizeFirstLetter } from './arbitraryFunctions.js';
 import { generateName } from './generateName.js';
 import { generateWord } from './generateWord.js';
 
 let length;
 let thing;
-const armySize = 25;
-const amtKings = 6;
+const ARMY_SIZE = 42;
+const AMOUNT_KINGS = 10;
 var armyAkilled = 0;
 var armyBkilled = 0;
 
-export function char(charSheet) {
+let CHARACTERS = [];
+let LEADERS = [];
 
-  charSheet.prefix = `${prefix[getRandomInt(0, prefix.length)]}`;
-  charSheet.name =
-    `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
-  charSheet.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
-  charSheet.title = `<i>${title[getRandomInt(0, title.length)]}</i>`;
-  charSheet.fullName = `${charSheet.prefix} ${charSheet.name} ${charSheet.lastName} ${charSheet.title}`;
-  charSheet.childOf[0] =
-    `${prefix[getRandomInt(0, prefix.length)]} ${generateName(getRandomInt(1, 6))}`;
-  charSheet.childOf[1] =
-    `${prefix[getRandomInt(0, prefix.length)]} ${generateName(getRandomInt(1, 6))} ${suffix[getRandomInt(0, suffix.length)]} ${title[getRandomInt(0, title.length)]}`;
-  charSheet.weapon = `${weapon[getRandomInt(0, weapon.length)]}`;
-  charSheet.VIT = `${getRandomInt(5, 20)}`;
-  charSheet.STR = `${getRandomInt(1, 10)}`;
-  charSheet.DEX = `${getRandomInt(1, 10)}`;
-  charSheet.HP = `${charSheet.VIT * 10}`;
-  charSheet.prestige = `${getRandomInt(0, 101)}`;
-  charSheet.birthplace = `${kings[getRandomInt(0, amtKings)].kingdom}`;
-  charSheet.faction = `House ${kings[getRandomInt(0, amtKings)].dynasty}`;
-}
+/*
 
-function makeKings(leader) {
+ What we want is a main player character fighting an endless list of enemies.
+ The enemies will be generated randomly, and the player will have to fight them.
+ The player and enemies will all have the same parameters.
+ Player death creates a new character. 
 
-  leader.name = `${generateName(getRandomInt(1, 6)).toUpperCase()} ${suffix[getRandomInt(0, suffix.length)]}`;
-  leader.lastName = `${lastname[getRandomInt(0, lastname.length)]}`;
-  leader.title = `<i>${title[getRandomInt(0, title.length)]}</i>`;
-  leader.dynasty = `${generateWord(8).toUpperCase()}`;
-  leader.fullName = `King ${leader.name} ${leader.lastName} ${leader.title} of House ${leader.dynasty}`;
-  leader.kingdom = `${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}`;
-  return kings;
-};
+*/
 
-export function makeArmy() {
+class Character {
 
-  //make kings
-  kings.splice(0, kings.length);
-  for (let i = 0; i < amtKings; i++) {
-    var leader = {
-      name: "",
-      lastName: "",
-      title: "",
-      fullName: "",
-      dynasty: "",
-      kingdom: ""
-    };
+  prefix;
+  name;
+  lastName;
+  title;
+  fullName;
+  childOf;
+  weapon;
+  HP;
+  VIT;
+  STR;
+  DEX;
+  prestige;
+  birthplace;
+  faction;
+  status;
+  alive;
+  traits;
+  items;
+  relationships;
+  eventLog;
 
-    makeKings(leader);
-    kings.push(leader);
+  constructor(
+    prefix,
+    name,
+    lastName,
+    title,
+    fullName,
+    childOf,
+    weapon,
+    HP,
+    VIT,
+    STR,
+    DEX,
+    prestige,
+    birthplace,
+    faction,
+    status,
+    alive,
+    traits,
+    items,
+    relationships,
+    eventLog
+  ) {
+    this.prefix = prefix;
+    this.name = name;
+    this.lastName = lastName;
+    this.title = title;
+    this.fullName = `${prefix} ${name} ${lastName} ${title}`;
+    this.childOf = [];
+    this.weapon = weapon;
+    this.HP = VIT * 20;
+    this.VIT = VIT;
+    this.STR = STR;
+    this.DEX = DEX;
+    this.prestige = prestige;
+    this.birthplace = `Kingdom of ${LEADERS[getRandomInt(0, LEADERS.length)].kingdom}`;
+    this.faction = `House ${LEADERS[getRandomInt(0, LEADERS.length)].dynasty}`;
+    this.status = status;
+    this.alive = alive;
+
+    this.traits = traits;
+    this.items = items;
+    this.relationships = relationships;
+    this.eventLog = eventLog;
   }
+  whoAmI() {
+    return `I am ${this.fullName} of ${this.faction}
+      and I am from the ${this.birthplace}.
+      I have ${this.prestige} prestige in ${this.faction}.
+      I have killed ${this.killed.length} people.`;
+  }
+  attack(target) {
+    const hitRoll = getRandomInt(1, 21); // 1d20 roll to hit
+    const damageRoll = getRandomInt(1, this.STR + 1); // 1d(STR+1) roll for damage
 
-
-
-  const element = document.getElementById('army');
-  let html = `<div class="col"><h4>Army of <span class="highlight">${kings[0].fullName}</span></h4><table class="army-table">  
-  <th>Name:</th> 
-  <th>Child Of:</th>
-  <th>Weapon:</th>
-  <th>VIT:</th>
-  <th>STR:</th>
-  <th>DEX:</th>
-  <th>Prestige:</th>
-  <th>Birthplace:</th>
-  <th>Faction:</th>`
-
-  //clear array
-  armyA.splice(0, armyA.length);
-
-  //armyA
-  for (let i = 0; i < armySize; i++) {
-
-    var character = {
-      prefix: "",
-      name: "",
-      lastName: "",
-      title: "",
-      fullName: "",
-      childOf: [],
-      weapon: "",
-      HP: 0,
-      VIT: 0,
-      STR: 0,
-      DEX: 0,
-      prestige: 0,
-      birthplace: "",
-      faction: "",
-      status: "Alive"
-    };
-
-    char(character);
-
-    armyA.push(character);
-
-    let soldier =
-      `<td>${armyA[i].fullName.toString()}</td>
-    <td>${armyA[i].childOf[0].toString()} and ${armyA[i].childOf[1].toString()}</td>
-    <td>${armyA[i].weapon.toString()}</td>
-    <td>${armyA[i].VIT.toString()}</td>
-    <td>${armyA[i].STR.toString()}</td>
-    <td>${armyA[i].DEX.toString()}</td>
-    <td>${armyA[i].prestige.toString()}</td>
-    <td>${armyA[i].birthplace.toString()}</td>
-    <td>${armyA[i].faction.toString()}`;
-
-    if (character.status) {
-      html += `<tr>${soldier}</tr>`;
+    if (hitRoll >= target.DEX) { // the attack hits if the hit roll is greater than or equal to the target's DEX score
+      target.HP -= damageRoll; // apply damage to target
+      this.eventLog.push(`${this.fullName} hits ${target.fullName} for ${damageRoll} damage.`);
+      if (target.HP <= 0) { // target dies if their HP falls to or below 0
+        target.alive = false;
+        this.eventLog.push(`${target.fullName} has been defeated!`);
+        return true; // return true to indicate that the target has been defeated
+      }
+      else {
+        return false; // return false to indicate that the attack hit but the target is still alive
+      }
+    }
+    else { // the attack misses if the hit roll is less than the target's DEX score
+      this.eventLog.push(`${this.fullName} misses ${target.fullName}!`);
+      return false; // return false to indicate that the attack missed
     }
   }
+}
 
-  //display army in html doc
-  html += '</table><hr></div>';
-  //end ArmyA
-
-  //ArmyB
-  html += `<div class="col"><h4>Army of <span class="highlight">${kings[1].fullName}</span></h4><table class="army-table">  
-  <th>Name:</th> 
-  <th>Child Of:</th>
-  <th>Weapon:</th>
-  <th>VIT:</th>
-  <th>STR:</th>
-  <th>DEX:</th>
-  <th>Prestige:</th>
-  <th>Birthplace:</th>
-  <th>Faction:</th>`
-
-  //clear array
-  armyB.splice(0, armyB.length);
-
-  //armyB
-  for (let i = 0; i < armySize; i++) {
-
-    var character = {
-      prefix: "",
-      name: "",
-      lastName: "",
-      title: "",
-      fullName: "",
-      childOf: [],
-      weapon: "",
-      HP: 0,
-      VIT: 0,
-      STR: 0,
-      DEX: 0,
-      prestige: 0,
-      birthplace: "",
-      faction: "",
-      status: true
-    };
-    char(character);
-
-    armyB.push(character);
-
-    let soldier =
-      `<td>${armyB[i].fullName.toString()}</td>
-    <td>${armyB[i].childOf[0].toString()} and ${armyB[i].childOf[1].toString()}</td>
-    <td>${armyB[i].weapon.toString()}</td>
-    <td>${armyB[i].VIT.toString()}</td>
-    <td>${armyB[i].STR.toString()}</td>
-    <td>${armyB[i].DEX.toString()}</td>
-    <td>${armyB[i].prestige.toString()}</td>
-    <td>${armyB[i].birthplace.toString()}</td>
-    <td>${armyB[i].faction.toString()}</td>`;
-
-    if (character.status) {
-      html += `<tr>${soldier}</tr>`;
-    }
+class Leader {
+  constructor(name, dynasty, title, fullName, kingdom) {
+    this.name = name;
+    this.dynasty = dynasty;
+    this.title = title;
+    this.fullName = `${name} of House ${dynasty}`;
+    this.kingdom = kingdom;
   }
 
-  //display army in html doc
-  html += '</table><hr></div>';
+  deleteAKing() {
 
-  element.innerHTML = html;
+  }
 
-  return armyA, armyB;
+  whoAmI() {
+    return `-
+    ${this.fullName} ${this.title}
+     Kingdom of: ${this.kingdom} 
+     House of: ${this.dynasty} 
+    - `;
+  };
+
+  toJSON() {
+    return JSON.stringify(this);
+  }
+}
+
+class PlayerCharacter extends Character {
+  level;
+  equipment;
+  killed = [];
+
+  constructor(
+    prefix,
+    name,
+    lastName,
+    title,
+    fullName,
+    childOf,
+    weapon,
+    HP,
+    VIT,
+    STR,
+    DEX,
+    prestige,
+    birthplace,
+    faction,
+    status,
+    alive,
+    traits,
+    items,
+    relationships,
+    eventLog,
+    level,
+    equipment
+  ) {
+    super(
+      prefix,
+      name,
+      lastName,
+      title,
+      fullName,
+      childOf,
+      weapon,
+      HP,
+      VIT,
+      STR,
+      DEX,
+      prestige,
+      birthplace,
+      faction,
+      status,
+      alive,
+      traits,
+      items,
+      relationships,
+      eventLog
+    );
+    this.level = level;
+    this.equipment = equipment;
+  }
+
+  addKilled(name) {
+    this.killed.push(name);
+  }
+
 
 }
 
-export function showArmy() {
-  for (let i = 0; i < armySize; i++) {
-    console.log(armyA[i]);
-    console.log(armyB[i]);
+class EnemyCharacter extends Character {
+  level;
+  equipment;
+
+  constructor(
+    prefix,
+    name,
+    lastName,
+    title,
+    fullName,
+    childOf,
+    weapon,
+    HP,
+    VIT,
+    STR,
+    DEX,
+    prestige,
+    birthplace,
+    faction,
+    status,
+    alive,
+    traits,
+    items,
+    relationships,
+    eventLog,
+    level,
+    equipment
+  ) {
+    super(
+      prefix,
+      name,
+      lastName,
+      title,
+      fullName,
+      childOf,
+      weapon,
+      HP,
+      VIT,
+      STR,
+      DEX,
+      prestige,
+      birthplace,
+      faction,
+      status,
+      alive,
+      traits,
+      items,
+      relationships,
+      eventLog
+    );
+    this.level = level;
+    this.equipment = equipment;
   }
-  //console.log(armyB);
 }
+
+/*
+********** KING GENERATION **********
+1. From the generated kings come the seeds of all characters.
+  - Kings need to define dynasties
+  - Kings need to define royal houses
+  - Kings need to set the roots of prestige
+
+*/
+
+export function createAKing() {
+
+  let leader = new Leader(
+    `${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
+    `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //dynasty
+    `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
+    //full name
+    null,
+    `${generateWord(8)}`, //generate kingdom name
+  )
+  LEADERS.push(leader);
+  //console.log(leader);
+  //console.log(LEADERS);
+  return LEADERS;
+}
+
+/*
+********** SOLDIER GENERATION **********
+*/
+
+export function createPlayerChar() {
+  let character = new PlayerCharacter(
+    `${prefixes[getRandomInt(0, prefixes.length)]}`, //prefix
+    `${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
+    `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //lastname
+    `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
+    "", //fullname
+    "", //childOf
+    `${weapon[getRandomInt(0, weapon.length)]}`, //weapon 
+    null, //HP
+    getRandomInt(5, 20), //VIT
+    getRandomInt(1, 10), //STR
+    getRandomInt(1, 10), //DEX
+    getRandomInt(0, 101), //prestige
+    "", //birthplace
+    "", //faction
+    "Alive", //status 
+    true, //alive
+  )
+  //console.log(character);
+  CHARACTERS.push(character);
+  //console.log(CHARACTERS);
+  return CHARACTERS;
+
+}
+
+export function createAChar() {
+
+  let character = new PlayerCharacter(
+    `${prefixes[getRandomInt(0, prefixes.length)]}`, //prefix
+    `${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
+    `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //lastname
+    `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
+    "", //fullname
+    "", //childOf
+    `${weapon[getRandomInt(0, weapon.length)]}`, //weapon 
+    null, //HP
+    getRandomInt(5, 20), //VIT
+    getRandomInt(1, 10), //STR
+    getRandomInt(1, 10), //DEX
+    getRandomInt(0, 101), //prestige
+    "", //birthplace
+    "", //faction
+    "Alive", //status 
+    true, //alive
+  )
+  //console.log(character);
+  CHARACTERS.push(character);
+  //console.log(CHARACTERS);
+  return CHARACTERS;
+}
+
+export function createAnArmy() {
+
+
+}
+
+
+// export function makeArmy() {
+
+//   const element = document.getElementById('army');
+//   let html = `<div class="col"><h4>Army of <span class="highlight">${kings[0].fullName}</span></h4><table class="army-table">  
+//   <th>Name:</th> 
+//   <th>Child Of:</th>
+//   <th>Weapon:</th>
+//   <th>VIT:</th>
+//   <th>STR:</th>
+//   <th>DEX:</th>
+//   <th>Prestige:</th>
+//   <th>Birthplace:</th>
+//   <th>Faction:</th>`
+
+//   //clear array
+//   armyA.splice(0, armyA.length);
+
+//   //armyA
+//   for (let i = 0; i < ARMY_SIZE; i++) {
+
+
+
+//     // var character = {
+//     //   prefix: "",
+//     //   name: "",
+//     //   lastName: "",
+//     //   TITLES: "",
+//     //   fullName: "",
+//     //   childOf: [],
+//     //   weapon: "",
+//     //   HP: 0,
+//     //   VIT: 0,
+//     //   STR: 0,
+//     //   DEX: 0,
+//     //   prestige: 0,
+//     //   birthplace: "",
+//     //   faction: "",
+//     //   status: "Alive"
+//     // };
+
+//     char();
+
+//     armyA.push();
+
+//     let soldier =
+//       `<td>${armyA[i].fullName.toString()}</td>
+//     <td>${armyA[i].childOf[0].toString()} and ${armyA[i].childOf[1].toString()}</td>
+//     <td>${armyA[i].weapon.toString()}</td>
+//     <td>${armyA[i].VIT.toString()}</td>
+//     <td>${armyA[i].STR.toString()}</td>
+//     <td>${armyA[i].DEX.toString()}</td>
+//     <td>${armyA[i].prestige.toString()}</td>
+//     <td>${armyA[i].birthplace.toString()}</td>
+//     <td>${armyA[i].faction.toString()}`;
+
+//     if (character.status) {
+//       html += `<tr>${soldier}</tr>`;
+//     }
+//   }
+
+//   //display army in html doc
+//   html += '</table><hr></div>';
+//   //end ArmyA
+
+//   //ArmyB
+//   html += `<div class="col"><h4>Army of <span class="highlight">${kings[1].fullName}</span></h4><table class="army-table">  
+//   <th>Name:</th> 
+//   <th>Child Of:</th>
+//   <th>Weapon:</th>
+//   <th>VIT:</th>
+//   <th>STR:</th>
+//   <th>DEX:</th>
+//   <th>Prestige:</th>
+//   <th>Birthplace:</th>
+//   <th>Faction:</th>`
+
+
+
+//   //clear array
+//   armyB.splice(0, armyB.length);
+
+//   //armyB
+//   for (let i = 0; i < ARMY_SIZE; i++) {
+
+//     // let character = new Character();
+
+//     // var character = {
+//     //   prefix: "",
+//     //   name: "",
+//     //   lastName: "",
+//     //   TITLES: "",
+//     //   fullName: "",
+//     //   childOf: [],
+//     //   weapon: "",
+//     //   HP: 0,
+//     //   VIT: 0,
+//     //   STR: 0,
+//     //   DEX: 0,
+//     //   prestige: 0,
+//     //   birthplace: "",
+//     //   faction: "",
+//     //   status: true
+//     // };
+//     //char(character);
+
+//     //armyB.push(character);
+
+//     let soldier =
+//       `<td>${armyB[i].fullName.toString()}</td>
+//     <td>${armyB[i].childOf[0].toString()} and ${armyB[i].childOf[1].toString()}</td>
+//     <td>${armyB[i].weapon.toString()}</td>
+//     <td>${armyB[i].VIT.toString()}</td>
+//     <td>${armyB[i].STR.toString()}</td>
+//     <td>${armyB[i].DEX.toString()}</td>
+//     <td>${armyB[i].prestige.toString()}</td>
+//     <td>${armyB[i].birthplace.toString()}</td>
+//     <td>${armyB[i].faction.toString()}</td>`;
+
+//     if (character.status) {
+//       html += `<tr>${soldier}</tr>`;
+//     }
+//   }
+
+//display army in html doc
+// html += '</table><hr></div>';
+
+// element.innerHTML = html;
+
+// return armyA, armyB;
+
+// }
+
+/*
+********** ARMY DISPLAY **********
+*/
 
 export function combat(soldierA, soldierB) {
 
@@ -207,6 +496,11 @@ export function combat(soldierA, soldierB) {
   let speedB = soldierB.DEX;
   let first;
   let second;
+  let turn = 0;
+
+
+  // Will execute myCallback every 1 seconds 
+  //var intervalID = window.setInterval(combat(), 1000);
 
   text =
     `<span class='name'>${soldierA.fullName}</span> 
@@ -231,59 +525,85 @@ export function combat(soldierA, soldierB) {
     second = soldierA;
   }
 
-  while (first.status && second.status) {
-
-    let dmgFirst = Math.floor(first.STR * first.VIT + (first.HP / 10));
-    let dmgSecond = Math.floor(second.STR * second.VIT + (second.HP / 10));
-
-
-    second.HP = second.HP - dmgFirst;
-
+  while (first.alive && (turn === 0)) {
+    turn = 1;
+    let dmg = Math.floor(first.STR * first.VIT + (first.HP / 10));
+    second.HP = second.HP - dmg;
     result +=
-      `<p><span class='nameA'>${first.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgFirst}DMG</span>!</p>
-    <p><span class='nameB'>${second.name}</span> has <span class='highlight'>${Math.floor(second.HP)}HP</span> left.</p>`;
-
-    first.HP = first.HP - dmgSecond;
-
-    result +=
-      `<p><span class='nameA'>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmgSecond}DMG</span>!</p>
-    <p><span class='nameB'>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left.</p>`;
+      `<p><span>${first.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmg}DMG</span>!
+      so,
+      <span>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left. ${second.name}</span> has <span class='highlight'>${Math.floor(second.HP)}HP</span> left.</p>`;
 
 
-    result += `<span class='outcome'>`;
-    if (first.HP <= 0) {
-      result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
-      <span class='name'>${first.prefix} ${first.name}. </span>`;
-      first.status = false;
-      armyAkilled += 1;
-    } else if (second.HP <= 0) {
-      result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
-      <span class='name'>${second.prefix} ${second.name}. </span>`;
-      second.status = false;
-      armyBkilled += 1;
-    }
-    result += `</span>`;
   }
 
-  if (armyAkilled > armyBkilled) {
-    outcome = `<p>The army of <span class="highlight">${kings[1].fullName}</span> won.</p>`
-  } else if (armyBkilled > armyAkilled) {
-    outcome = `<p>The army of <span class="highlight">${kings[0].fullName}</span> won.</p>`
-  } else if (armyAkilled = armyAkilled) {
-    outcome = `<p>The battle was indecisive.</p>`
+  while (second.alive && (turn === 1)) {
+    turn = 0;
+    let dmg = Math.floor(second.STR * second.VIT + (second.HP / 10));
+    first.HP = first.HP - dmg;
+    result +=
+      `<p><span>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmg}DMG</span>!
+      so,    
+      <span>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left. ${second.name} has ${Math.floor(second.HP)} left.</p>`;
+
   }
+
+  if (first.HP <= 0) {
+    first.HP = 0;
+    first.alive = false;
+    result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
+    <span class='name'>${first.prefix} ${first.name}. </span>`;
+    second.addKilled(first.fullName);
+  } else if (second.HP <= 0) {
+    second.HP = 0;
+    second.alive = false;
+    result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
+    <span class='name'>${second.prefix} ${second.name}. </span>`;
+    first.addKilled(second.fullName);
+
+  }
+
+
+  // while (first.alive && second.alive) {
+
+  //   result += `<span class='outcome'>`;
+  //   if (first.HP <= 0) {
+  //     first.HP = 0;
+  //     first.alive = false;
+  //     result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
+  //     <span class='name'>${first.prefix} ${first.name}. </span>`;
+
+  //   } else if (second.HP <= 0) {
+  //     second.HP = 0;
+  //     second.alive = false;
+  //     result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
+  //     <span class='name'>${second.prefix} ${second.name}. </span>`;
+
+  //   }
+  //   result += `</span>`;
+  // }
 
   result += `</span><hr><p>`;
   text += result;
-  text += `<p>
-          The army of <span class="highlight">${kings[0].fullName}</span> lost <b>${armyAkilled}</b> soldiers.
-           The army of <span class="highlight">${kings[1].fullName}</span> lost <b>${armyBkilled}</b> soldiers.
-           </p>`
   combatText.push(text);
+  //combatText = text;
+  //console.log(combatText);
+  return combatText;
+
 }
 
 const combatText = [];
 let outcome;
+
+export function removeDeadChars() {
+  const index = CHARACTERS.findIndex(char => !char.alive);
+  if (index > -1) {
+    CHARACTERS.splice(index, 1);
+  }
+  console.log(CHARACTERS);
+
+}
+
 
 export function makeCombat() {
 
@@ -292,11 +612,11 @@ export function makeCombat() {
   combatText.splice(0, combatText.length);
 
   const element = document.getElementById('combat');
-  let html = `<h1>At the Battle of <span class="highlight">${place[getRandomInt(0, place.length)]} ${generateWord(10).toUpperCase()}</span>...</h1>`
+  let html = `<h1>At the Battle of <span class="highlight">${PLACES[getRandomInt(0, PLACES.length)]} ${generateWord(10).toUpperCase()}</span>...</h1>`
 
   html += `<ul class="combat-log-list">`;
 
-  for (let i = 0; i < armySize; i++) {
+  for (let i = 0; i < ARMY_SIZE; i++) {
     combat(armyA[i], armyB[i]);
     html += `<p><li class="combat-list-entry">${combatText[i]}</li></p>`;
   }
@@ -313,8 +633,8 @@ const eventText = [];
 export function makeHappen(soldierA, soldierB) {
   let thing =
     `In the year ${getRandomInt(1, 30)}
-   of the reign of <span class="highlight">${kings[getRandomInt(0, amtKings)].fullName}</span>,
-   in the <span class="highlight">${place[getRandomInt(0, place.length)]} of ${generateWord(8).toUpperCase()}</span>,
+   of the reign of <span class="highlight">${kings[getRandomInt(0, AMOUNT_KINGS)].fullName}</span>,
+   in the <span class="highlight">${PLACES[getRandomInt(0, PLACES.length)]} of ${generateWord(8).toUpperCase()}</span>,
    <span class="nameA">${soldierA.fullName}</span> <span class="attack">${verb[getRandomInt(0, verb.length)]}</span> <span class="nameB">${soldierB.fullName}</span>.`
 
   eventText.push(thing);
@@ -325,13 +645,13 @@ export function printEvent() {
   const element = document.getElementById('event');
 
   let kingLog = `<h2>The great kings who rule today...</h2>`;
-  for (let i = 0; i < amtKings; i++) {
+  for (let i = 0; i < AMOUNT_KINGS; i++) {
     kingLog += `<hr><p class='event-list'><span class='highlight'>${kings[i].fullName}</span> of <span class="name">${kings[i].kingdom}</span>.</p><hr>`
   }
 
   let html = `<h2>In the histories of old, it is said that...</h2>`;
 
-  for (let i = 0; i < armySize; i++) {
+  for (let i = 0; i < ARMY_SIZE; i++) {
     makeHappen(armyA[i], armyB[i]);
     html += `<hr><p class='event-list'>${eventText[i]}</p><hr>`;
   }
@@ -340,3 +660,5 @@ export function printEvent() {
   element.innerHTML = kingLog + html;
 
 }
+
+export { CHARACTERS, LEADERS, combatText };
