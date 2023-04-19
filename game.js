@@ -33,7 +33,7 @@ function init_game() {
 }
 function renderDOM() {
 
-    $('#create-player').innerHTML = `Create Player!`;
+    $('#create').innerHTML = `Create Player!`;
     $('#player-name').innerHTML = `${char1?.fullName}`;
     $('#player-hp').innerHTML = `HP: ${char1?.HP}`;
     $('#player-weapon').innerHTML = `Weapon: ${char1?.weapon}`;
@@ -67,7 +67,7 @@ function clearCombatText() {
     combatText.splice(0, combatText.length);
 }
 
-$('#create-player').addEventListener('click', () => {
+$('#create').addEventListener('click', () => {
 
     setState(() => {
         if (!char1?.alive) {

@@ -92,7 +92,8 @@ class Character {
   whoAmI() {
     return `I am ${this.fullName} of ${this.faction}
       and I am from the ${this.birthplace}.
-      I have ${this.prestige} prestige in ${this.faction}.`;
+      I have ${this.prestige} prestige in ${this.faction}.
+      I have killed ${this.killed.length} people.`;
   }
   attack(target) {
     const hitRoll = getRandomInt(1, 21); // 1d20 roll to hit

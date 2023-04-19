@@ -79,12 +79,12 @@ canvas {
 }
 
 #combat-log {
-    margin-top: 5em;
+    margin-top: 1em;
     text-align: left;
     display: absolute;
     height: 20em;
     max-width: 90%;
-    font-size: 0.5em;
+    font-size: 1em;
 }
 
 #create{
@@ -105,6 +105,10 @@ canvas {
     opacity: 0;
     transition: visibility 0s 2s, opacity 2s linear;
 } */
+
+#event-text {
+    font-size: small;
+}
 #controls {
     margin-left: auto;
     margin-right: auto;
