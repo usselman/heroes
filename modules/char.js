@@ -1,5 +1,5 @@
 import { armyA, armyB, kings, prefixes, LAST_NAMES, SUFFIXES, TITLES, weapon, PLACES, verb } from './material/buildingBlocks.js';
-import { getRandomInt } from './arbitraryFunctions.js';
+import { getRandomInt, capitalizeFirstLetter } from './arbitraryFunctions.js';
 import { generateName } from './generateName.js';
 import { generateWord } from './generateWord.js';
 
@@ -74,7 +74,7 @@ class Character {
     this.fullName = `${prefix} ${name} ${lastName} ${title}`;
     this.childOf = [];
     this.weapon = weapon;
-    this.HP = VIT * 10;
+    this.HP = VIT * 20;
     this.VIT = VIT;
     this.STR = STR;
     this.DEX = DEX;
@@ -146,6 +146,7 @@ class Leader {
 class PlayerCharacter extends Character {
   level;
   equipment;
+  killed = [];
 
   constructor(
     prefix,
@@ -196,6 +197,11 @@ class PlayerCharacter extends Character {
     this.level = level;
     this.equipment = equipment;
   }
+
+  addKilled(name) {
+    this.killed.push(name);
+  }
+
 
 }
 
@@ -271,7 +277,7 @@ export function createAKing() {
     `${TITLES[getRandomInt(0, TITLES.length)]}`, //title
     //full name
     null,
-    `${generateWord(8).toUpperCase()}`, //generate kingdom name
+    `${generateWord(8)}`, //generate kingdom name
   )
   LEADERS.push(leader);
   //console.log(leader);
@@ -311,7 +317,7 @@ export function createPlayerChar() {
 
 export function createAChar() {
 
-  let character = new EnemyCharacter(
+  let character = new PlayerCharacter(
     `${prefixes[getRandomInt(0, prefixes.length)]}`, //prefix
     `${generateName(getRandomInt(1, 6))} ${SUFFIXES[getRandomInt(0, SUFFIXES.length)]}`, //name
     `${LAST_NAMES[getRandomInt(0, LAST_NAMES.length)]}`, //lastname
@@ -341,137 +347,137 @@ export function createAnArmy() {
 }
 
 
-export function makeArmy() {
+// export function makeArmy() {
 
-  const element = document.getElementById('army');
-  let html = `<div class="col"><h4>Army of <span class="highlight">${kings[0].fullName}</span></h4><table class="army-table">  
-  <th>Name:</th> 
-  <th>Child Of:</th>
-  <th>Weapon:</th>
-  <th>VIT:</th>
-  <th>STR:</th>
-  <th>DEX:</th>
-  <th>Prestige:</th>
-  <th>Birthplace:</th>
-  <th>Faction:</th>`
+//   const element = document.getElementById('army');
+//   let html = `<div class="col"><h4>Army of <span class="highlight">${kings[0].fullName}</span></h4><table class="army-table">  
+//   <th>Name:</th> 
+//   <th>Child Of:</th>
+//   <th>Weapon:</th>
+//   <th>VIT:</th>
+//   <th>STR:</th>
+//   <th>DEX:</th>
+//   <th>Prestige:</th>
+//   <th>Birthplace:</th>
+//   <th>Faction:</th>`
 
-  //clear array
-  armyA.splice(0, armyA.length);
+//   //clear array
+//   armyA.splice(0, armyA.length);
 
-  //armyA
-  for (let i = 0; i < ARMY_SIZE; i++) {
-
-
-
-    // var character = {
-    //   prefix: "",
-    //   name: "",
-    //   lastName: "",
-    //   TITLES: "",
-    //   fullName: "",
-    //   childOf: [],
-    //   weapon: "",
-    //   HP: 0,
-    //   VIT: 0,
-    //   STR: 0,
-    //   DEX: 0,
-    //   prestige: 0,
-    //   birthplace: "",
-    //   faction: "",
-    //   status: "Alive"
-    // };
-
-    char();
-
-    armyA.push();
-
-    let soldier =
-      `<td>${armyA[i].fullName.toString()}</td>
-    <td>${armyA[i].childOf[0].toString()} and ${armyA[i].childOf[1].toString()}</td>
-    <td>${armyA[i].weapon.toString()}</td>
-    <td>${armyA[i].VIT.toString()}</td>
-    <td>${armyA[i].STR.toString()}</td>
-    <td>${armyA[i].DEX.toString()}</td>
-    <td>${armyA[i].prestige.toString()}</td>
-    <td>${armyA[i].birthplace.toString()}</td>
-    <td>${armyA[i].faction.toString()}`;
-
-    if (character.status) {
-      html += `<tr>${soldier}</tr>`;
-    }
-  }
-
-  //display army in html doc
-  html += '</table><hr></div>';
-  //end ArmyA
-
-  //ArmyB
-  html += `<div class="col"><h4>Army of <span class="highlight">${kings[1].fullName}</span></h4><table class="army-table">  
-  <th>Name:</th> 
-  <th>Child Of:</th>
-  <th>Weapon:</th>
-  <th>VIT:</th>
-  <th>STR:</th>
-  <th>DEX:</th>
-  <th>Prestige:</th>
-  <th>Birthplace:</th>
-  <th>Faction:</th>`
+//   //armyA
+//   for (let i = 0; i < ARMY_SIZE; i++) {
 
 
 
-  //clear array
-  armyB.splice(0, armyB.length);
+//     // var character = {
+//     //   prefix: "",
+//     //   name: "",
+//     //   lastName: "",
+//     //   TITLES: "",
+//     //   fullName: "",
+//     //   childOf: [],
+//     //   weapon: "",
+//     //   HP: 0,
+//     //   VIT: 0,
+//     //   STR: 0,
+//     //   DEX: 0,
+//     //   prestige: 0,
+//     //   birthplace: "",
+//     //   faction: "",
+//     //   status: "Alive"
+//     // };
 
-  //armyB
-  for (let i = 0; i < ARMY_SIZE; i++) {
+//     char();
 
-    // let character = new Character();
+//     armyA.push();
 
-    // var character = {
-    //   prefix: "",
-    //   name: "",
-    //   lastName: "",
-    //   TITLES: "",
-    //   fullName: "",
-    //   childOf: [],
-    //   weapon: "",
-    //   HP: 0,
-    //   VIT: 0,
-    //   STR: 0,
-    //   DEX: 0,
-    //   prestige: 0,
-    //   birthplace: "",
-    //   faction: "",
-    //   status: true
-    // };
-    //char(character);
+//     let soldier =
+//       `<td>${armyA[i].fullName.toString()}</td>
+//     <td>${armyA[i].childOf[0].toString()} and ${armyA[i].childOf[1].toString()}</td>
+//     <td>${armyA[i].weapon.toString()}</td>
+//     <td>${armyA[i].VIT.toString()}</td>
+//     <td>${armyA[i].STR.toString()}</td>
+//     <td>${armyA[i].DEX.toString()}</td>
+//     <td>${armyA[i].prestige.toString()}</td>
+//     <td>${armyA[i].birthplace.toString()}</td>
+//     <td>${armyA[i].faction.toString()}`;
 
-    //armyB.push(character);
+//     if (character.status) {
+//       html += `<tr>${soldier}</tr>`;
+//     }
+//   }
 
-    let soldier =
-      `<td>${armyB[i].fullName.toString()}</td>
-    <td>${armyB[i].childOf[0].toString()} and ${armyB[i].childOf[1].toString()}</td>
-    <td>${armyB[i].weapon.toString()}</td>
-    <td>${armyB[i].VIT.toString()}</td>
-    <td>${armyB[i].STR.toString()}</td>
-    <td>${armyB[i].DEX.toString()}</td>
-    <td>${armyB[i].prestige.toString()}</td>
-    <td>${armyB[i].birthplace.toString()}</td>
-    <td>${armyB[i].faction.toString()}</td>`;
+//   //display army in html doc
+//   html += '</table><hr></div>';
+//   //end ArmyA
 
-    if (character.status) {
-      html += `<tr>${soldier}</tr>`;
-    }
-  }
+//   //ArmyB
+//   html += `<div class="col"><h4>Army of <span class="highlight">${kings[1].fullName}</span></h4><table class="army-table">  
+//   <th>Name:</th> 
+//   <th>Child Of:</th>
+//   <th>Weapon:</th>
+//   <th>VIT:</th>
+//   <th>STR:</th>
+//   <th>DEX:</th>
+//   <th>Prestige:</th>
+//   <th>Birthplace:</th>
+//   <th>Faction:</th>`
 
-  //display army in html doc
-  html += '</table><hr></div>';
 
-  element.innerHTML = html;
 
-  return armyA, armyB;
+//   //clear array
+//   armyB.splice(0, armyB.length);
 
-}
+//   //armyB
+//   for (let i = 0; i < ARMY_SIZE; i++) {
+
+//     // let character = new Character();
+
+//     // var character = {
+//     //   prefix: "",
+//     //   name: "",
+//     //   lastName: "",
+//     //   TITLES: "",
+//     //   fullName: "",
+//     //   childOf: [],
+//     //   weapon: "",
+//     //   HP: 0,
+//     //   VIT: 0,
+//     //   STR: 0,
+//     //   DEX: 0,
+//     //   prestige: 0,
+//     //   birthplace: "",
+//     //   faction: "",
+//     //   status: true
+//     // };
+//     //char(character);
+
+//     //armyB.push(character);
+
+//     let soldier =
+//       `<td>${armyB[i].fullName.toString()}</td>
+//     <td>${armyB[i].childOf[0].toString()} and ${armyB[i].childOf[1].toString()}</td>
+//     <td>${armyB[i].weapon.toString()}</td>
+//     <td>${armyB[i].VIT.toString()}</td>
+//     <td>${armyB[i].STR.toString()}</td>
+//     <td>${armyB[i].DEX.toString()}</td>
+//     <td>${armyB[i].prestige.toString()}</td>
+//     <td>${armyB[i].birthplace.toString()}</td>
+//     <td>${armyB[i].faction.toString()}</td>`;
+
+//     if (character.status) {
+//       html += `<tr>${soldier}</tr>`;
+//     }
+//   }
+
+//display army in html doc
+// html += '</table><hr></div>';
+
+// element.innerHTML = html;
+
+// return armyA, armyB;
+
+// }
 
 /*
 ********** ARMY DISPLAY **********
@@ -527,31 +533,33 @@ export function combat(soldierA, soldierB) {
       so,
       <span>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left. ${second.name}</span> has <span class='highlight'>${Math.floor(second.HP)}HP</span> left.</p>`;
 
-    if (first.HP <= 0) {
-      first.HP = 0;
-      first.alive = false;
-      result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
-      <span class='name'>${first.prefix} ${first.name}. </span>`;
 
-    }
   }
 
-  while (second && (turn === 1)) {
+  while (second.alive && (turn === 1)) {
     turn = 0;
     let dmg = Math.floor(second.STR * second.VIT + (second.HP / 10));
     first.HP = first.HP - dmg;
     result +=
       `<p><span>${second.name}</span> <span class='attack'>attacked</span> for <span class='dmg'>${dmg}DMG</span>!
       so,    
-      <span>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left. ${Math.floor(second.name)} has ${Math.floor(second.HP)} left.</p>`;
+      <span>${first.name}</span> has <span class='highlight'>${Math.floor(first.HP)}HP</span> left. ${second.name} has ${Math.floor(second.HP)} left.</p>`;
 
-    if (second.HP <= 0) {
-      second.HP = 0;
-      second.alive = false;
-      result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
-      <span class='name'>${second.prefix} ${second.name}. </span>`;
+  }
 
-    }
+  if (first.HP <= 0) {
+    first.HP = 0;
+    first.alive = false;
+    result += `<span class='name'>${second.prefix} ${second.name}</span> killed 
+    <span class='name'>${first.prefix} ${first.name}. </span>`;
+    second.addKilled(first.fullName);
+  } else if (second.HP <= 0) {
+    second.HP = 0;
+    second.alive = false;
+    result += `<span class='name'>${first.prefix} ${first.name}</span> killed 
+    <span class='name'>${second.prefix} ${second.name}. </span>`;
+    first.addKilled(second.fullName);
+
   }
 
 

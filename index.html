@@ -35,9 +35,9 @@
   crossorigin="anonymous"></script>
 
     <h1>Heroes of Fantasia</h1>
-    <div id="game" class="container">
+    <div id="game" class="container-lg">
       <div class="row align-items-start">
-        <div class="col">
+        <div class="col-lg">
           <div id="player-box">
             <div id="stats">
               <span class="highlight" id="player-name">Player: </span>
@@ -50,10 +50,12 @@
               </br>
               <span class="highlight" id="player-dex">DEX: </span>
               </br>
+              <span class="highlight" id="player-killed"> </span>
+              </br>
             </div>
           </div>
         </div>
-        <div class="col">
+        <div class="col-lg">
           <div id="enemy-box">
             <div id="stats">
               <span class="highlight-red" id="enemy-name">Combatant:</span>
@@ -66,12 +68,21 @@
               </br>
               <span class="highlight-red" id="enemy-dex">DEX: </span>
               </br>
+              <span class="highlight-red" id="enemy-killed"> </span>
+              </br>
             </div>
           </div>
         </div>
       </div>
+      
+      
 
-      <div class="container" id="combat-log">
+      <div class="event-log">
+        <div id="event-text" class="alert">Welcome to Heroes of Fantasia! </br>
+          <span id="text-line-1" class="highlight"></span></br>
+          <span id="text-line-2" class="highlight-red"></span></br>
+        </div>
+        <div class="container-lg" id="combat-log">
           <span id="combat-text-line-1"></span> </br>
           <!-- <span id="combat-text-line-2"></span> </br>
           <span id="combat-text-line-3"></span> </br>
@@ -82,13 +93,6 @@
           <span id="combat-text-line-8"></span> </br>
           <span id="combat-text-line-9"></span> </br> -->
       </div>
-      
-
-      <div class="event-log">
-        <div id="event-text" class="alert">Welcome to Heroes of Fantasia! </br>
-          <span id="text-line-1" class="highlight"></span></br>
-          <span id="text-line-2" class="highlight-red"></span></br>
-        </div>
       </div>
       
       <div id="controls">
